@@ -8,7 +8,7 @@ RUN cp /etc/skel/.zshrc /root/
 RUN chsh -s /bin/zsh
 
 RUN apt-get install -y seclists nishang gobuster ffuf smbmap sqlmap crackmapexec gospider &&\
-    apt-get install -y powershell-empire metasploit-framework shellter veil unicorn-magic impacket
+    apt-get install -y powershell-empire metasploit-framework shellter veil unicorn-magic
 
 WORKDIR /root
 RUN mkdir .git
