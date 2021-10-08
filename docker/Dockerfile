@@ -4,8 +4,8 @@ RUN apt-get install -y nmap git emacs nginx curl wget golang gcc g++ apt-transpo
 RUN apt-get install -y s3fs zsh zsh-syntax-highlighting zsh-autosuggestions
 RUN apt-get install -y exploitdb radare2 torsocks proxychains socat tmux
 RUN apt-get install -y impacket-scripts python2 wordlists mono-devel ansible
-RUN /bin/sh -c cp /etc/skel/.zshrc /root/
-RUN /bin/sh -c chsh -s /bin/zsh
+RUN cp /etc/skel/.zshrc /root/
+RUN chsh -s /bin/zsh
 
 RUN apt-get install -y seclists nishang gobuster ffuf smbmap sqlmap crackmapexec gospider &&\
     apt-get install -y powershell-empire metasploit-framework shellter veil unicorn-magic impacket
