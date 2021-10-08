@@ -14,7 +14,7 @@ WORKDIR /root
 RUN mkdir .git
 WORKDIR /root/.git
 
-RUN /bin/sh -c git clone --recurse https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite  &&\
+RUN git clone --recurse https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite  &&\
     git clone --recurse https://github.com/SecureAuthCorp/impacket.git &&\
     git clone --recurse https://github.com/bats3c/shad0w.git &&\
     git clone --recurse https://github.com/lgandx/Responder.git &&\
