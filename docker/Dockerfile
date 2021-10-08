@@ -1,6 +1,6 @@
 FROM kalilinux/kali-rolling
 RUN apt-get update
-RUN apt-get install -y nmap netcat git emacs nginx curl wget golang gcc g++ apt-transport-https python3 python3-pip pass
+RUN apt-get install -y nmap git emacs nginx curl wget golang gcc g++ apt-transport-https python3 python3-pip pass
 RUN apt-get install -y s3fs zsh zsh-syntax-highlighting zsh-autosuggestions
 RUN apt-get install -y exploitdb radare2 torsocks proxychains socat tmux
 RUN apt-get install -y impacket-scripts python2 wordlists mono-devel ansible
