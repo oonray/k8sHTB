@@ -15,7 +15,7 @@ spec:
                 app: kali
         spec:
             nodeSelector:
-              storage: 01
+              storage: "01"
             volumes:
                 - name: tools
                   configMap:

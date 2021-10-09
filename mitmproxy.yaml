@@ -15,7 +15,7 @@ spec:
                 app: mitmproxy
         spec:
             nodeSelector:
-              storage: 03
+              storage: "03"
             volumes:
                 - name: tools
                   configMap:
@@ -34,20 +34,6 @@ spec:
                     items:
                       - key: route-override.sh
                         path: route-override.sh
-
-                - name: install-script
-                  configMap:
-                    name: kali-insall-script
-                    items:
-                      - key: install.sh
-                        path: install.sh
-
-                - name: empire-install-script
-                  configMap:
-                    name: empire-insall-script
-                    items:
-                      - key: install.sh
-                        path: install.sh
 
                 - name: busybox-script
                   configMap:
@@ -69,16 +55,6 @@ spec:
                 - name: thm-storage
                   hostPath:
                     path: /disk1/kubernetes/HTB
-                    type: Directory
-
-                - name: git-storage
-                  hostPath:
-                    path: /disk1/kubernetes/Kali/Git
-                    type: Directory
-
-                - name: empire-storage
-                  hostPath:
-                    path: /disk1/kubernetes/Empire
                     type: Directory
 
             dnsConfig:
