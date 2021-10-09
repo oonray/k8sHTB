@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: kali
+    name: empire
     labels:
-      app: kali
+      app: empire
 spec:
     replicas: 1
     selector:
         matchLabels:
-            app: kali
+            app: empire
     template:
         metadata:
             labels:
-                app: kali
+                app: empire
         spec:
             volumes:
                 - name: tools

@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: kali
+    name: mitmproxy
     labels:
-      app: kali
+      app: mitmproxy
 spec:
     replicas: 1
     selector:
         matchLabels:
-            app: kali
+            app: mitmproxy
     template:
         metadata:
             labels:
-                app: kali
+                app: mitmproxy
         spec:
             volumes:
                 - name: tools
