@@ -102,8 +102,6 @@ spec:
                       mountPath: /opt/THM
                     - name: git-storage
                       mountPath: /opt/git
-                    - name: seclists-storage
-                      mountPath: /opt/SecLists
                     - name: tmux-conf
                       mountPath: /root/.tmux.conf
                       subPath: .tmux.conf
