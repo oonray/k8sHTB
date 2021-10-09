@@ -64,20 +64,6 @@ spec:
                 - name: tmp
                   emptyDir: {}
 
-                - name: thm-storage
-                  hostPath:
-                    path: /disk1/kubernetes/HTB
-                    type: Directory
-
-                - name: git-storage
-                  hostPath:
-                    path: /disk1/kubernetes/Kali/Git
-                    type: Directory
-
-                - name: empire-storage
-                  hostPath:
-                    path: /disk1/kubernetes/Empire
-                    type: Directory
 
             dnsConfig:
               nameservers:
@@ -94,10 +80,6 @@ spec:
                   volumeMounts:
                     - name:  tmp
                       mountPath:  /tmp
-                    - name: thm-storage
-                      mountPath: /opt/HTB
-                    - name: git-storage
-                      mountPath: /opt/git
                   tty: true
                   stdin: true
                   resources:

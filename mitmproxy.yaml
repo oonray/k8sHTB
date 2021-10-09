@@ -49,12 +49,6 @@ spec:
 
                 - name: tmp
                   emptyDir: {}
-
-                - name: thm-storage
-                  hostPath:
-                    path: /disk1/kubernetes/HTB
-                    type: Directory
-
             dnsConfig:
               nameservers:
                 - 8.8.8.8
@@ -73,9 +67,6 @@ spec:
                     limits:
                       memory: "500Mi"
                       cpu: "1"
-                  volumeMounts:
-                    - mountPath: /opt/HTB
-                      name: thm-storage
 
                 - name: openvpn
                   image: dperson/openvpn-client

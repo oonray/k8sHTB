@@ -64,21 +64,6 @@ spec:
                 - name: tmp 
                   emptyDir: {}
 
-                - name: thm-storage
-                  hostPath:
-                    path: /disk1/kubernetes/HTB
-                    type: Directory
-
-                - name: git-storage
-                  hostPath:
-                    path: /disk1/kubernetes/Kali/Git
-                    type: Directory
-
-                - name: empire-storage
-                  hostPath:
-                    path: /disk1/kubernetes/Empire
-                    type: Directory
-
             dnsConfig:
               nameservers:
                 - 8.8.8.8
@@ -98,10 +83,6 @@ spec:
                     - name: install-script
                       mountPath: /tmp/kali/install.sh
                       subPath: install.sh
-                    - name: thm-storage
-                      mountPath: /opt/THM
-                    - name: git-storage
-                      mountPath: /opt/git
                     - name: tmux-conf
                       mountPath: /root/.tmux.conf
                       subPath: .tmux.conf
