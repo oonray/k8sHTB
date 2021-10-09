@@ -29,14 +29,14 @@ spec:
                 - name: route-script
                   configMap:
                     name: opnevpn-script
-                    items: 
+                    items:
                       - key: route-override.sh
                         path: route-override.sh
 
                 - name: install-script
                   configMap:
                     name: kali-insall-script
-                    items: 
+                    items:
                       - key: install.sh
                         path: install.sh
 
@@ -50,18 +50,18 @@ spec:
                 - name: busybox-script
                   configMap:
                     name: buisybox-insall-script
-                    items: 
+                    items:
                       - key: install.sh
                         path: install.sh
 
                 - name: tmux-conf
                   configMap:
                     name: tmux
-                    items: 
+                    items:
                       - key: .tmux.conf
                         path: .tmux.conf
-                        
-                - name: tmp 
+
+                - name: tmp
                   emptyDir: {}
 
                 - name: thm-storage
@@ -83,49 +83,33 @@ spec:
               nameservers:
                 - 8.8.8.8
             containers:
-                - name: kali-linux
-                  image: oonray/kali:latest
-                  command: ["/bin/bash","/tmp/kali/install.sh"]
-                  imagePullPolicy: Always
-                  securityContext:
-                      privileged: true
-                      capabilities: 
-                        add:
-                          - NET_ADMIN
-                  volumeMounts:
-                    - name:  tmp
-                      mountPath:  /tmp
-                    - name: install-script
-                      mountPath: /tmp/kali/install.sh
-                      subPath: install.sh
-                    - name: thm-storage
-                      mountPath: /opt/THM
-                    - name: git-storage
-                      mountPath: /opt/git
-                    - name: seclists-storage
-                      mountPath: /opt/SecLists
-                    - name: tmux-conf
-                      mountPath: /root/.tmux.conf
-                      subPath: .tmux.conf
-                  tty: true
-                  stdin: true
+                - name: mitmproxy
+                  image: mitmproxy/mitmproxy
+                  args:
+                    - mitmweb
+                    - '--web-host'
+                    -  0.0.0.0
+                  ports:
+                    - containerPort: 8080
+                    - containerPort: 8081
+                    - containerPort: 1337
                   resources:
                     limits:
                       memory: "500Mi"
-                      cpu: "0.5"
-                  ports:
-                    - containerPort: 22
-                    - containerPort: 4443
+                      cpu: "1"
+                  volumeMounts:
+                    - mountPath: /opt/HTB
+                      name: thm-storage
 
                 - name: openvpn
-                  image: dperson/openvpn-client 
+                  image: dperson/openvpn-client
                   tty: true
                   stdin: true
                   command: ["/bin/sh","-c"]
                   args: ["openvpn --config '/vpn/vpn.ovpn' --script-security 3"]
                   securityContext:
                       privileged: true
-                      capabilities: 
+                      capabilities:
                         add:
                           - NET_ADMIN
                   env:
@@ -135,11 +119,9 @@ spec:
                     - name:  vpn-config
                       mountPath:  /vpn/vpn.ovpn
                       subPath: vpn.ovpn
-                    - name: tmp 
-                      mountPath: /tmp/route 
+                    - name: tmp
+                      mountPath: /tmp/route
                   resources:
                     limits:
                       memory: "1Gi"
                       cpu: "0.5"
-
-                    

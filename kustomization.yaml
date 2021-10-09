@@ -8,3 +8,5 @@ resources:
   - proxy.yaml
   - service.yaml
   - kali.yaml
+  - empire.yaml
+  - mitmproxy.yaml
