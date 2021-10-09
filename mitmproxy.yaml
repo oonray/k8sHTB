@@ -14,6 +14,8 @@ spec:
             labels:
                 app: mitmproxy
         spec:
+            nodeSelector:
+              storage: 03
             volumes:
                 - name: tools
                   configMap:

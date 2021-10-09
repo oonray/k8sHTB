@@ -14,6 +14,8 @@ spec:
             labels:
                 app: empire
         spec:
+            nodeSelector:
+              storage: 02
             volumes:
                 - name: tools
                   configMap:
