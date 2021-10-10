@@ -78,40 +78,12 @@ spec:
                     mountPath: /vpn/route-override.sh
                     subPath: route-override.sh
             containers:
-                - name: kali-linux
-                  image: oonray/kali:latest
-                  command: ["/bin/bash","/tmp/kali/install.sh"]
-                  imagePullPolicy: Always
-                  securityContext:
-                      privileged: true
-                      capabilities: 
-                        add:
-                          - NET_ADMIN
-                  volumeMounts:
-                    - name:  tmp
-                      mountPath:  /tmp
-                    - name: install-script
-                      mountPath: /tmp/kali/install.sh
-                      subPath: install.sh
-                    - name: tmux-conf
-                      mountPath: /root/.tmux.conf
-                      subPath: .tmux.conf
-                  tty: true
-                  stdin: true
-                  resources:
-                    limits:
-                      memory: "500Mi"
-                      cpu: "0.5"
-                  ports:
-                    - containerPort: 22
-                    - containerPort: 4443
-
                 - name: openvpn
-                  image: dperson/openvpn-client 
+                  image: dperson/openvpn-client
                   tty: true
                   stdin: true
                   command: ["/bin/sh","-c"]
-                  args: ["openvpn --config '/vpn/vpn.ovpn' --script-security 3"]
+                  args: ["openvpn --config '/vpn/vpn.ovpn' --script-security 3 --route-up /tmp/route/route-override.sh"]
                   securityContext:
                       privileged: true
                       capabilities:
@@ -124,11 +96,39 @@ spec:
                     - name:  vpn-config
                       mountPath:  /vpn/vpn.ovpn
                       subPath: vpn.ovpn
-                    - name: tmp 
-                      mountPath: /tmp/route 
+                    - name: tmp
+                      mountPath: /tmp/route
                   resources:
                     limits:
-                      memory: "1Gi"
+                      memory: "500mi"
                       cpu: "0.5"
 
-                    
+
+            #   - name: kali-linux
+            #     image: oonray/kali:latest
+            #     command: ["/bin/bash","/tmp/kali/install.sh"]
+            #     imagePullPolicy: Always
+            #     securityContext:
+            #         privileged: true
+            #         capabilities:
+            #           add:
+            #             - NET_ADMIN
+            #     volumeMounts:
+            #       - name:  tmp
+            #         mountPath:  /tmp
+            #       - name: install-script
+            #         mountPath: /tmp/kali/install.sh
+            #         subPath: install.sh
+            #       - name: tmux-conf
+            #         mountPath: /root/.tmux.conf
+            #         subPath: .tmux.conf
+            #     tty: true
+            #     stdin: true
+            #     resources:
+            #       limits:
+            #         memory: "500Mi"
+            #         cpu: "0.5"
+            #     ports:
+            #       - containerPort: 22
+            #       - containerPort: 4443
+
