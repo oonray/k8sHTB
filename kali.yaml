@@ -81,7 +81,7 @@ spec:
                   tty: true
                   stdin: true
                   command: ["/bin/sh","-c"]
-                  args: ["openvpn", "--config", '/vpn/vpn.ovpn', "--script-security", "3", "--route-up", "/tmp/route/route-override.sh"]
+                  args:  ["openvpn --config 'vpn/client.ovpn' --auth-user-pass 'vpn/auth.txt' --script-security 3 --route-up /tmp/route/route-override.sh;"]
                   securityContext:
                       privileged: true
                       capabilities:
