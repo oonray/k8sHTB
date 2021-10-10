@@ -29,8 +29,8 @@ spec:
                 - name: route-script
                   configMap:
                     name: opnevpn-script
-                    items: 
-                        path: route-override.sh
+                    items:
+                      - path: route-override.sh
 
                 - name: install-script
                   configMap:
