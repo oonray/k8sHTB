@@ -103,8 +103,7 @@ spec:
                   command: ["/bin/sh","-c"]
                   args: ["openvpn --config '/vpn/vpn.ovpn' --script-security 3"]
                   securityContext:
-                      privileged: true
-                      capabilities: 
+                      capabilities:
                         add:
                           - NET_ADMIN
                   env:
