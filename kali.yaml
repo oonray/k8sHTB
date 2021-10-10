@@ -90,8 +90,8 @@ spec:
                   tty: true
                   stdin: true
                   command:
-                  - "/bin/sh"
-                  - "-c"
+                    - "/bin/sh"
+                    - "-c"
                   args:
                     - "openvpn"
                     - "--config"
@@ -118,33 +118,4 @@ spec:
                     limits:
                       memory: "500mi"
                       cpu: "0.5"
-
-
-            #   - name: kali-linux
-            #     image: oonray/kali:latest
-            #     command: ["/bin/bash","/tmp/kali/install.sh"]
-            #     imagePullPolicy: Always
-            #     securityContext:
-            #         privileged: true
-            #         capabilities:
-            #           add:
-            #             - NET_ADMIN
-            #     volumeMounts:
-            #       - name:  tmp
-            #         mountPath:  /tmp
-            #       - name: install-script
-            #         mountPath: /tmp/kali/install.sh
-            #         subPath: install.sh
-            #       - name: tmux-conf
-            #         mountPath: /root/.tmux.conf
-            #         subPath: .tmux.conf
-            #     tty: true
-            #     stdin: true
-            #     resources:
-            #       limits:
-            #         memory: "500Mi"
-            #         cpu: "0.5"
-            #     ports:
-            #       - containerPort: 22
-            #       - containerPort: 4443
 
