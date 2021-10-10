@@ -30,7 +30,6 @@ spec:
                   configMap:
                     name: opnevpn-script
                     items: 
-                      - key: route-override.sh
                         path: route-override.sh
 
                 - name: install-script
@@ -71,13 +70,7 @@ spec:
               - name: vpn-route-init
                 image: busybox
                 command:
-                  - '/bin/sh'
-                  - '-c'
-                  - 'cp'
-                  - '/vpn/route-override.sh'
-                  - '/tmp/route/route-override.sh;'
-                  - 'chown root:root /tmp/route/route-override.sh;'
-                  - 'chmod o+x /tmp/route/route-override.sh'
+                  ["/bin/sh", '-c','cp','/vpn/route-override.sh','/tmp/route/route-override.sh;','chown root:root /tmp/route/route-override.sh;','chmod o+x /tmp/route/route-override.sh']
                 volumeMounts:
                   - name: tmp
                     mountPath: /tmp/route
