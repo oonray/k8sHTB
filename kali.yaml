@@ -77,7 +77,7 @@ spec:
                   - '/vpn/route-override.sh'
                   - '/tmp/route/route-override.sh;'
                   - 'chown root:root /tmp/route/route-override.sh;'
-                  - 'chmod o+x /tmp/route/route-override.sh;'
+                  - 'chmod o+x /tmp/route/route-override.sh'
                 volumeMounts:
                   - name: tmp
                     mountPath: /tmp/route
