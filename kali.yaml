@@ -70,7 +70,14 @@ spec:
             initContainers:
               - name: vpn-route-init
                 image: busybox
-                command: ['/bin/sh', '-c', 'cp /vpn/route-override.sh /tmp/route/route-override.sh; chown root:root /tmp/route/route-override.sh; chmod o+x /tmp/route/route-override.sh;']
+                command:
+                  - '/bin/sh'
+                  - '-c'
+                  - 'cp'
+                  - '/vpn/route-override.sh'
+                  - '/tmp/route/route-override.sh;'
+                  - 'chown root:root /tmp/route/route-override.sh;'
+                  - 'chmod o+x /tmp/route/route-override.sh;'
                 volumeMounts:
                   - name: tmp
                     mountPath: /tmp/route
@@ -82,8 +89,17 @@ spec:
                   image: dperson/openvpn-client
                   tty: true
                   stdin: true
-                  command: ["/bin/sh","-c"]
-                  args: ["openvpn --config '/vpn/vpn.ovpn' --script-security 3 --route-up /tmp/route/route-override.sh"]
+                  command:
+                  - "/bin/sh"
+                  - "-c"
+                  args:
+                    - "openvpn"
+                    - "--config"
+                    - '/vpn/vpn.ovpn'
+                    - "--script-security"
+                    - "3"
+                    - "--route-up"
+                    - "/tmp/route/route-override.sh"
                   securityContext:
                       privileged: true
                       capabilities:
