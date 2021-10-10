@@ -52,6 +52,16 @@ spec:
             dnsConfig:
               nameservers:
                 - 8.8.8.8
+            initContainers:
+              - name: vpn-route-init
+                image: busybox
+                command: ['/bin/sh', '-c', 'cp /vpn/route-override.sh /tmp/route/route-override.sh; chown root:root /tmp/route/route-override.sh; chmod o+x /tmp/route/route-override.sh;']
+                volumeMounts:
+                  - name: tmp
+                    mountPath: /tmp/route
+                  - name: route-script
+                    mountPath: /vpn/route-override.sh
+                    subPath: route-override.sh
             containers:
                 - name: mitmproxy
                   image: mitmproxy/mitmproxy
