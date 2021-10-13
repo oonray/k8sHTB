@@ -23,8 +23,7 @@ RUN git clone --recurse https://github.com/carlospolop/privilege-escalation-awes
     git clone --recurse https://github.com/GhostPack/Seatbelt.git &&\
     git clone --recurse https://github.com/samratashok/ADModule.git &&\
     git clone --recurse https://github.com/Sq00ky/LeetLinked &&\
-    git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
+    git clone https://github.com/oonray/Notes.git &&\
 
 RUN ~/.emacs.d/bin/doom install
-
 CMD ["while" "true;" "do" "sleep" "5;" "done"]
