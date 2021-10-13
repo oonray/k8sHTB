@@ -26,78 +26,42 @@ spec:
                       - key: vpn.ovpn
                         path: vpn.ovpn
 
-                - name: route-script
-                  configMap:
-                    name: opnevpn-script
-                    items:
-                      - key: route-override.sh
-                        path: route-override.sh
-
                 - name: install-script
                   configMap:
                     name: kali-insall-script
-                    items: 
-                      - key: install.sh
-                        path: install.sh
-
-                - name: empire-install-script
-                  configMap:
-                    name: empire-insall-script
                     items:
-                      - key: install.sh
-                        path: install.sh
-
-                - name: busybox-script
-                  configMap:
-                    name: buisybox-insall-script
-                    items: 
                       - key: install.sh
                         path: install.sh
 
                 - name: tmux-conf
                   configMap:
                     name: tmux
-                    items: 
+                    items:
                       - key: .tmux.conf
                         path: .tmux.conf
                 - name: tmp
                   emptyDir: {}
-            dnsConfig:
-              nameservers:
-                - 8.8.8.8
-            initContainers:
-              - name: vpn-route-init
-                image: busybox
-                command: ['/bin/sh', '-c', 'cp /vpn/route-override.sh /tmp/route/route-override.sh; chown root:root /tmp/route/route-override.sh; chmod o+x /tmp/route/route-override.sh;']
-                volumeMounts:
-                  - name: tmp
-                    mountPath: /tmp/route
-                  - name: route-script
-                    mountPath: /vpn/route-override.sh
-                    subPath: route-override.sh
             containers:
-                - name: openvpn
-                  image: dperson/openvpn-client
+                - name: kali
+                  image: oonray/kali
                   tty: true
                   stdin: true
-                  command: ["/bin/sh","-c"]
-                  args:  ["openvpn --config '/vpn/vpn.ovpn' --script-security 3 --route-up /tmp/route/route-override.sh;"]
+                  command: ["/bin/sh"]
+
+                - name: openvpn
+                  image: ghcr.io/wfg/openvpn-client
                   securityContext:
-                      privileged: true
-                      capabilities:
-                        add:
-                          - NET_ADMIN
+                    privileged: true
                   env:
-                      - name: TZ
-                        value: "Norway"
+                    - name: KILL_SWITCH
+                      valus: off
+                    - name: VPN_CONFIG_FILE
+                      value: vpn.ovpn
                   volumeMounts:
-                    - name:  vpn-config
-                      mountPath:  /vpn/vpn.ovpn
+                    - name: vpn-config
+                      mountPath:  /data/vpn/vpn.ovpn
                       subPath: vpn.ovpn
-                    - name: tmp
-                      mountPath: /tmp/route
                   resources:
                     limits:
-                      memory: "500Mi"
+                      memory: "1Gi"
                       cpu: "0.5"
-
