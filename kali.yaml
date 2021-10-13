@@ -54,7 +54,7 @@ spec:
                     privileged: true
                   env:
                     - name: KILL_SWITCH
-                      valus: off
+                      value: off
                     - name: VPN_CONFIG_FILE
                       value: vpn.ovpn
                   volumeMounts:
