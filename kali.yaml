@@ -49,6 +49,10 @@ spec:
                   image: oonray/kali
                   tty: true
                   stdin: true
+                  hostAliases:
+                    - ip: 10.10.10.29
+                      hostnames:
+                      - bank.htb
                   command: ["/bin/sh"]
 
                 - name: openvpn
