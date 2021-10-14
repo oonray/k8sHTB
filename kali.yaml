@@ -60,10 +60,14 @@ spec:
                       value: off
                     - name: VPN_CONFIG_FILE
                       value: vpn.ovpn
+                    - name: SOCKS_PROXY
+                      value: on
                   volumeMounts:
                     - name: vpn-config
                       mountPath:  /data/vpn/vpn.ovpn
                       subPath: vpn.ovpn
+                  ports:
+                    - containerPort: 1080
                   resources:
                     limits:
                       memory: "1Gi"

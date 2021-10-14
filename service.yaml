@@ -7,22 +7,6 @@ spec:
   selector:
     app: kali
   ports:
-    - name: "8080"
+    - name: "1080"
       protocol: TCP
-      port: 8080
-
-    - name: "8081"
-      protocol: TCP
-      port: 8081
-
-    - name: "pforward"
-      protocol: TCP
-      port: 4443
-
-    - name: "empire"
-      protocol: TCP
-      port: 1337
-
-    - name: "covenant"
-      protocol: TCP
-      port: 7443
+      port: 1080

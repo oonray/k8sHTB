@@ -6,7 +6,7 @@ resources:
   #- ingress.yaml
   - secrets.enc.json
   #- proxy.yaml
-  #- service.yaml
+  - service.yaml
   - kali.yaml
   #- empire.yaml
   #- mitmproxy.yaml
