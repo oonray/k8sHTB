@@ -48,6 +48,7 @@ spec:
               - ip: 10.10.10.29
                 hostnames:
                 - bank.htb
+                - chris.bank.htb
             containers:
                 - name: kali
                   image: oonray/kali
