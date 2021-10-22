@@ -49,6 +49,9 @@ spec:
                 hostnames:
                 - bank.htb
                 - chris.bank.htb
+              - ip: 10.10.10.111
+                hostnames:
+                - frolic.htb
             containers:
                 - name: kali
                   image: oonray/kali
