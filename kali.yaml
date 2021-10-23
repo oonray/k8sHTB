@@ -52,6 +52,9 @@ spec:
               - ip: 10.10.10.111
                 hostnames:
                 - frolic.htb
+              - ip: 10.10.10.150
+                hostnames:
+                - curling.htb
             containers:
                 - name: kali
                   image: oonray/kali
