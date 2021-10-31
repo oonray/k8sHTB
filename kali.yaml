@@ -58,6 +58,9 @@ spec:
               - ip: 10.10.10.22
                 hostnames:
                 - europa.htb
+                - europacorp.htb
+                - www.europacorp.htb
+                - admin-portal.europacorp.htb
             containers:
                 - name: kali
                   image: oonray/kali
