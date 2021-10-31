@@ -55,6 +55,9 @@ spec:
               - ip: 10.10.10.150
                 hostnames:
                 - curling.htb
+              - ip: 10.10.10.22
+                hostnames:
+                - europa.htb
             containers:
                 - name: kali
                   image: oonray/kali
