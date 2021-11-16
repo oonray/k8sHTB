@@ -45,22 +45,10 @@ spec:
                 - name: tmp
                   emptyDir: {}
             hostAliases:
-              - ip: 10.10.10.29
+              - ip: 10.10.10.21
                 hostnames:
-                - bank.htb
-                - chris.bank.htb
-              - ip: 10.10.10.111
-                hostnames:
-                - frolic.htb
-              - ip: 10.10.10.150
-                hostnames:
-                - curling.htb
-              - ip: 10.10.10.22
-                hostnames:
-                - europa.htb
-                - europacorp.htb
-                - www.europacorp.htb
-                - admin-portal.europacorp.htb
+                - joker.htb
+                - Joker.htb
             containers:
                 - name: kali
                   image: oonray/kali
