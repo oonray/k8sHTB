@@ -4,8 +4,8 @@ namespace: htb
 resources:
   - configmaps.yaml
   - secrets.enc.json
-  - secrets.fortress.enc.yaml
-  - secrets.endgame.enc.yaml
+  - secrets.fortress.enc.json
+  - secrets.endgame.enc.json
   - service.yaml
   - kali.yaml
   - fortress.yaml
