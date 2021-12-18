@@ -5,9 +5,13 @@ resources:
   - configmaps.yaml
   #- ingress.yaml
   - secrets.enc.json
+  - secrets.fortress.enc.json
+  - secrets.endgame.enc.json
   #- proxy.yaml
   - service.yaml
   - kali.yaml
+  - fortress.yaml
+  - endagem.yaml
   #- empire.yaml
   #- mitmproxy.yaml
   #   - name: kali-linux

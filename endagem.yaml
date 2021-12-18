@@ -1,0 +1,80 @@
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: kali
+    labels:
+      app: kali
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: kali
+    template:
+        metadata:
+            labels:
+                app: kali
+        spec:
+            dnsConfig:
+              nameservers:
+                - 8.8.8.8
+            volumes:
+                - name: tools
+                  configMap:
+                    name: tools
+
+                - name: vpn-config
+                  secret:
+                    secretName: vpn-endgame
+                    items:
+                      - key: vpn.ovpn
+                        path: vpn.ovpn
+
+                - name: install-script
+                  configMap:
+                    name: kali-insall-script
+                    items:
+                      - key: install.sh
+                        path: install.sh
+
+                - name: tmux-conf
+                  configMap:
+                    name: tmux
+                    items:
+                      - key: .tmux.conf
+                        path: .tmux.conf
+                - name: tmp
+                  emptyDir: {}
+            hostAliases:
+              - ip: 10.10.10.21
+                hostnames:
+                - joker.htb
+            containers:
+                - name: kali
+                  image: oonray/kali
+                  tty: true
+                  stdin: true
+                  command: ["/bin/sh"]
+
+                - name: openvpn
+                  image: ghcr.io/wfg/openvpn-client
+                  securityContext:
+                    privileged: true
+                  env:
+                    - name: KILL_SWITCH
+                      value: off
+                    - name: VPN_CONFIG_FILE
+                      value: vpn.ovpn
+                    - name: SOCKS_PROXY
+                      value: on
+                  volumeMounts:
+                    - name: vpn-config
+                      mountPath:  /data/vpn/vpn.ovpn
+                      subPath: vpn.ovpn
+                  ports:
+                    - containerPort: 1080
+                  resources:
+                    limits:
+                      memory: "1Gi"
+                      cpu: "0.5"
