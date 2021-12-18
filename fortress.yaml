@@ -2,18 +2,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: kali
+    name: kali-fortress
     labels:
-      app: kali
+      app: kali-fortress
 spec:
     replicas: 1
     selector:
         matchLabels:
-            app: kali
+            app: kali-fortress
     template:
         metadata:
             labels:
-                app: kali
+                app: kali-fortress
         spec:
             dnsConfig:
               nameservers:
