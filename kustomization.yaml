@@ -5,7 +5,7 @@ resources:
   - configmaps.yaml
   - secrets.enc.json
   - secrets.fortress.enc.yaml
-  - secrets.endgame.enc.json
+  - secrets.endgame.enc.yaml
   - service.yaml
   - kali.yaml
   - fortress.yaml
