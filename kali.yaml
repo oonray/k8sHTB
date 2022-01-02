@@ -42,18 +42,33 @@ spec:
                     items:
                       - key: .tmux.conf
                         path: .tmux.conf
+
+                - name: goproxy
+                  configMap:
+                    name: goproxy
+                    items:
+                      - key: goproxy.go
+                        path: goproxy.go
+
                 - name: tmp
                   emptyDir: {}
+
             hostAliases:
               - ip: 10.10.10.21
                 hostnames:
-                - joker.htb
+                  - joker.htb
             containers:
                 - name: kali
                   image: oonray/kali
                   tty: true
                   stdin: true
                   command: ["/bin/sh"]
+                  volumeMounts:
+                    - name: goproxy
+                      mountPath: /data/proxy/goproxy.go
+                      subPath: goproxy.go
+                  ports:
+                    - containerPort: 8081
 
                 - name: openvpn
                   image: ghcr.io/wfg/openvpn-client
@@ -72,6 +87,7 @@ spec:
                       subPath: vpn.ovpn
                   ports:
                     - containerPort: 1080
+
                   resources:
                     limits:
                       memory: "1Gi"

@@ -102,8 +102,50 @@ data:
         log: error connect disconnect # iooperation
     }
 
-    route {
-      from: 0.0.0.0/0 to: 10.10.10.21/32 via: 10.10.10.21 port=3128
-      proxyprotocol: http_v1.0
-      command: connect
+    #route {
+    #  from: 0.0.0.0/0 to: 10.10.10.21/32 via: 10.10.10.21 port=3128
+    #  proxyprotocol: http_v1.0
+    #  }
+---
+kind: ConfigMap
+metadata:
+  name: goproxy
+apiVersion: v1
+data:
+  proxy.go: |-
+    package main
+
+    import (
+      "flag"
+      "net/http"
+      "net/http/httputil"
+      "net/url"
+      "github.com/gorilla/mux"
+      log "github.com/Sirupsen/logrus"
+    )
+
+    var (
+      hostProxy 	= make(map[string]string)
+      proxies		= make(map[string]*httputil.ReverseProxy)
+    )
+
+    func init(){
+      hostProxy["10.10.10.21"] = "http://kalamari:ihateseafood@10.10.10.21:3128/"
+      hostProxy["joker.htb"] = "http://kalamari:ihateseafood@joker.htb:3128/"
+
+      for k,v := range hostProxy {
+        remote, err := url.Parse(v)
+        if (err!=nil){
+          log.Fatalf("Unable To Parse Proxy Target")
+        }
+        proxies[k] = httputil.NewSingleHostReverseProxy(remote)
+      }
+    }
+
+    func main() {
+      r = mux.NewRouter()
+      for host, proxy := range proxies {
+        r.Host(host).Handler(proxy)
+      }
+      log.Fatal(http.ListenAndServe(":8081",r))
     }
