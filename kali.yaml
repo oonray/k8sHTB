@@ -47,8 +47,8 @@ spec:
                   configMap:
                     name: goproxy
                     items:
-                      - key: goproxy.go
-                        path: goproxy.go
+                      - key: proxy.go
+                        path: proxy.go
 
                 - name: tmp
                   emptyDir: {}
@@ -65,8 +65,8 @@ spec:
                   command: ["/bin/sh"]
                   volumeMounts:
                     - name: goproxy
-                      mountPath: /data/proxy/goproxy.go
-                      subPath: goproxy.go
+                      mountPath: /data/proxy/proxy.go
+                      subPath: proxy.go
                   ports:
                     - containerPort: 8081
 
