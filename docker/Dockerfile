@@ -7,9 +7,8 @@ RUN apt-get install -y nmap git nginx curl wget golang gcc g++ apt-transport-htt
     impacket-scripts python2 python3 python3-pip mono-devel ansible \
     tree powershell
 
-RUN go get
-
-RUN apt-get upgrade -y github.com/Sirupsen/logrus github.com/gorilla/mux
+RUN go get github.com/Sirupsen/logrus github.com/gorilla/mux
+RUN apt-get upgrade -y
 
 RUN cp /etc/skel/.zshrc /root/
 RUN chsh -s /bin/zsh
