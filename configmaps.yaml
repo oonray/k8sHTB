@@ -129,6 +129,7 @@ data:
     )
 
     func init(){
+      hostProxy["127.0.0.1"] = "http://kalamari:ihateseafood@10.10.10.21:3128/"
       hostProxy["10.10.10.21"] = "http://kalamari:ihateseafood@10.10.10.21:3128/"
       hostProxy["joker.htb"] = "http://kalamari:ihateseafood@joker.htb:3128/"
 
