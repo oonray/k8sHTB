@@ -14,9 +14,9 @@ spec:
             labels:
                 app: kali
         spec:
-            dnsConfig:
-              nameservers:
-                - 8.8.8.8
+            #dnsConfig:
+            #  nameservers:
+            #    - 8.8.8.8
             volumes:
                 - name: tools
                   configMap:
