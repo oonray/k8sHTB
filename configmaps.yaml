@@ -116,7 +116,6 @@ data:
     package main
 
     import (
-      "flag"
       "net/http"
       "net/http/httputil"
       "net/url"
@@ -143,7 +142,7 @@ data:
     }
 
     func main() {
-      r = mux.NewRouter()
+      r := mux.NewRouter()
       for host, proxy := range proxies {
         r.Host(host).Handler(proxy)
       }
