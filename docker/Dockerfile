@@ -4,7 +4,7 @@ RUN apt-get update
 RUN apt-get install -y nmap git nginx curl wget golang gcc g++ apt-transport-https python3 python3-pip pass \
     s3fs zsh zsh-syntax-highlighting zsh-autosuggestions\
     exploitdb radare2 torsocks proxychains socat tmux \
-    impacket-scripts python2 python3 python3-pip mono-devel ansible \
+    python2 python3 python3-pip mono-devel ansible \
     tree powershell
 
 RUN go get github.com/sirupsen/logrus github.com/gorilla/mux
@@ -14,7 +14,7 @@ RUN cp /etc/skel/.zshrc /root/
 RUN chsh -s /bin/zsh
 
 RUN apt-get install -y seclists wordlists nishang gobuster ffuf smbmap sqlmap crackmapexec gospider \
-    metasploit-framework shellter veil unicorn-magic tcpdump impacket responder
+    metasploit-framework shellter veil unicorn-magic tcpdump impacket-scripts responder
 
 WORKDIR /root
 RUN mkdir .git
