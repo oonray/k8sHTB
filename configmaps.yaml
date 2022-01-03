@@ -121,6 +121,7 @@ data:
       "net/url"
       "github.com/gorilla/mux"
       log "github.com/sirupsen/logrus"
+      "github.com/gorilla/handlers"
     )
 
     var (
@@ -147,5 +148,6 @@ data:
       for host, proxy := range proxies {
         r.Host(host).Handler(proxy)
       }
-      log.Fatal(http.ListenAndServe(":8081",r))
+      logged := handlers.LoggingHandler(os.Stdout, r)
+      log.Fatal(http.ListenAndServe(":8081",logged))
     }
