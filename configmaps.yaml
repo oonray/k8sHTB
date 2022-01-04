@@ -159,7 +159,6 @@ data:
     package main
 
     import (
-      "fmt"
       "net"
       "bufio"
       "io"
