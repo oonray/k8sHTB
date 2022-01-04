@@ -102,10 +102,6 @@ data:
         log: error connect disconnect # iooperation
     }
 
-    route {
-      from: 0.0.0.0/0 to: 127.0.0.1/24 via: 10.10.10.21 port=3128
-      proxyprotocol: http_v1.0
-      }
 ---
 kind: ConfigMap
 metadata:
@@ -151,4 +147,89 @@ data:
       }
       logged := handlers.LoggingHandler(os.Stdout, r)
       log.Fatal(http.ListenAndServe(":8081",logged))
+    }
+
+---
+kind: ConfigMap
+metadata:
+  name: goproxy
+apiVersion: v1
+data:
+  proxy.go: |-
+    package main
+
+    import (
+      "net"
+      "bufio"
+    )
+
+    var (
+      hostProxy 	= make(map[string]string)
+      proxies		= make(map[string]*httputil.ReverseProxy)
+    )
+
+    func init(){
+      hostProxy["127.0.0.1"] = "http://kalamari:ihateseafood@10.10.10.21:3128/"
+      hostProxy["10.10.10.21"] = "http://kalamari:ihateseafood@10.10.10.21:3128/"
+      hostProxy["joker.htb"] = "http://kalamari:ihateseafood@joker.htb:3128/"
+
+      for k,v := range hostProxy {
+        remote, err := url.Parse(v)
+        if (err!=nil){
+          log.Fatalf("Unable To Parse Proxy Target")
+        }
+        proxies[k] = httputil.NewSingleHostReverseProxy(remote)
+      }
+    }
+
+    func main() {
+      r := mux.NewRouter()
+      for host, proxy := range proxies {
+        r.Host(host).Handler(proxy)
+      }
+      logged := handlers.LoggingHandler(os.Stdout, r)
+      log.Fatal(http.ListenAndServe(":8081",logged))
+    }
+
+---
+kind: ConfigMap
+metadata:
+  name: goforward
+apiVersion: v1
+data:
+  forward.go: |-
+    package main
+
+    import (
+      "fmt"
+      "net"
+      "bufio"
+      log "github.com/sirupsen/logrus"
+    )
+
+    const port int = 8081
+    const con_port int = 3128
+
+    var (
+      in net.Listener
+      out net.Conn
+      reader *bufio.Reader
+      writer *bufio.Writer
+    )
+
+    func main() {
+      var err error
+      in, err = net.Listen("tcp",fmt.Sprintf(":%d",port))
+      if err != nil {
+        log.Info("Could not connect: %s",err)
+        return
+      }
+      reader := bufio.NewReader(in)
+
+      out, err = net.Dial("tcp",fmt.Sprintf(":%d",con_port))
+      if err != nil {
+        log.Info("Could not connect: %s",err)
+        return
+      }
+      writer := bufio.NewWriter(out)
     }

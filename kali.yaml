@@ -50,6 +50,13 @@ spec:
                       - key: proxy.go
                         path: proxy.go
 
+                - name: goforward
+                  configMap:
+                    name: goforward
+                    items:
+                      - key: forward.go
+                        path: forward.go
+
                 - name: tmp
                   emptyDir: {}
 
@@ -67,6 +74,9 @@ spec:
                     - name: goproxy
                       mountPath: /data/proxy/proxy.go
                       subPath: proxy.go
+                    - name: goforward
+                      mountPath: /data/forward/forward.go
+                      subPath: forward.go
                   ports:
                     - containerPort: 8081
 
