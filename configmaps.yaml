@@ -102,10 +102,10 @@ data:
         log: error connect disconnect # iooperation
     }
 
-    #route {
-    #  from: 0.0.0.0/0 to: 10.10.10.21/32 via: 10.10.10.21 port=3128
-    #  proxyprotocol: http_v1.0
-    #  }
+    route {
+      from: 0.0.0.0/0 to: 127.0.0.1/24 via: 10.10.10.21 port=3128
+      proxyprotocol: http_v1.0
+      }
 ---
 kind: ConfigMap
 metadata:
