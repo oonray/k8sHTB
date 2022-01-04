@@ -165,6 +165,9 @@ data:
       log "github.com/sirupsen/logrus"
     )
 
+    //const port int = 8081
+    //const con_port int = 3128
+
     var (
       in net.Listener
       out net.Conn
@@ -174,15 +177,18 @@ data:
 
     func main() {
       var err error
-      in, err = net.Listen("tcp",":8081")
+
+      log.Info("Connecting to 10.10.10.21:3128")
+      out, err = net.Dial("tcp","10.10.10.21:3128")
       if err != nil {
         log.Infof("Could not connect: %s",err)
         return
       }
 
-      out, err = net.Dial("tcp","10.10.10.21:3128")
+      log.Info("Listening :8081")
+      in, err = net.Listen("tcp",":8081")
       if err != nil {
-        log.Infof("Could not connect: %s",err)
+        log.Infof("Could not listen: %s",err)
         return
       }
 
@@ -191,6 +197,7 @@ data:
       for {
         con, err := in.Accept()
         if err != nil {continue}
+        log.Info("Got connection")
 
         reader := bufio.NewReader(con)
         io.Copy(writer,reader)
