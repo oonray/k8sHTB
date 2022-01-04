@@ -162,6 +162,7 @@ data:
       "fmt"
       "net"
       "bufio"
+      "io"
       log "github.com/sirupsen/logrus"
     )
 
@@ -171,23 +172,31 @@ data:
     var (
       in net.Listener
       out net.Conn
-      reader *bufio.Reader
-      writer *bufio.Writer
+      reader io.Reader
+      writer io.Writer
     )
 
     func main() {
       var err error
       in, err = net.Listen("tcp",fmt.Sprintf(":%d",port))
       if err != nil {
-        log.Info("Could not connect: %s",err)
+        log.Infof("Could not connect: %s",err)
         return
       }
-      reader := bufio.NewReader(in)
 
       out, err = net.Dial("tcp",fmt.Sprintf(":%d",con_port))
       if err != nil {
-        log.Info("Could not connect: %s",err)
+        log.Infof("Could not connect: %s",err)
         return
       }
+
       writer := bufio.NewWriter(out)
+
+      for {
+        con, err := in.Accept()
+        if err != nil {continue}
+
+        reader := bufio.NewReader(con)
+        io.Copy(writer,reader)
+      }
     }
