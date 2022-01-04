@@ -175,7 +175,7 @@ data:
 
     func main() {
       var err error
-      in, err = net.Listen("tcp",":8081"))
+      in, err = net.Listen("tcp",":8081")
       if err != nil {
         log.Infof("Could not connect: %s",err)
         return
