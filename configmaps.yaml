@@ -112,41 +112,63 @@ data:
     package main
 
     import (
-      "os"
+      "fmt"
+      "flag"
       "net/http"
       "net/http/httputil"
       "net/url"
+      "errors"
       "github.com/gorilla/mux"
       log "github.com/sirupsen/logrus"
-      "github.com/gorilla/handlers"
     )
 
     var (
-      hostProxy 	= make(map[string]string)
       proxies		= make(map[string]*httputil.ReverseProxy)
+      proxy *string
+      others []string
     )
 
-    func init(){
-      hostProxy["127.0.0.1"] = "http://kalamari:ihateseafood@10.10.10.21:3128/"
-      hostProxy["10.10.10.21"] = "http://kalamari:ihateseafood@10.10.10.21:3128/"
-      hostProxy["joker.htb"] = "http://kalamari:ihateseafood@joker.htb:3128/"
+    func proxy_init(){
+      remote, err := url.Parse(*proxy)
+      if (err!=nil){
+        log.Errorf("Unable To Parse Proxy Target: %s",err)
+      }
 
-      for k,v := range hostProxy {
-        remote, err := url.Parse(v)
-        if (err!=nil){
-          log.Fatalf("Unable To Parse Proxy Target")
-        }
-        proxies[k] = httputil.NewSingleHostReverseProxy(remote)
+      for _,v := range others {
+        proxies[v] = httputil.NewSingleHostReverseProxy(remote)
       }
     }
 
+    func argparse() error {
+      proxy = flag.String("p,proxy","","The proxy to forward to")
+      flag.Parse()
+      others = flag.Args()
+
+      if(*proxy == ""){
+        return errors.New("Target proxy needs to be decleared")
+      }
+
+      if(len(others) <= 0){
+        return errors.New(fmt.Sprintf("Needs more than %d hosts",len(others)))
+      }
+
+      return nil
+    }
+
     func main() {
+      err := argparse()
+      if err != nil {
+        log.Fatal(err)
+      }
+
+      proxy_init()
+
       r := mux.NewRouter()
       for host, proxy := range proxies {
         r.Host(host).Handler(proxy)
       }
-      logged := handlers.LoggingHandler(os.Stdout, r)
-      log.Fatal(http.ListenAndServe(":8081",logged))
+
+      log.Fatal(http.ListenAndServe(":8081",r))
     }
 
 ---
@@ -159,6 +181,8 @@ data:
     package main
 
     import (
+      "fmt"
+      "flag"
       "net"
       "bufio"
       "io"
@@ -173,33 +197,61 @@ data:
       out net.Conn
       reader io.Reader
       writer io.Writer
+
+      lport *string
+
+      host *string
+      port *string
+
+      cons string
+      lcons string
+
     )
+
+    func argparse(){
+      lport = flag.String("lp","","The port to listen on")
+      host = flag.String("H","","The host to conenct to")
+      port = flag.String("P","","The port to connect to")
+      flag.Parse()
+    }
 
     func main() {
       var err error
 
-      log.Info("Connecting to 10.10.10.21:3128")
-      out, err = net.Dial("tcp","10.10.10.21:3128")
-      if err != nil {
-        log.Infof("Could not connect: %s",err)
-        return
-      }
+      argparse()
 
-      log.Info("Listening :8081")
-      in, err = net.Listen("tcp",":8081")
+      cons = fmt.Sprintf("%s:%s",*host,*port)
+      lcons = fmt.Sprintf(":%s",*lport)
+
+      log.Infof("Listening on %s",lcons)
+      in, err = net.Listen("tcp",lcons)
       if err != nil {
         log.Infof("Could not listen: %s",err)
         return
       }
 
-      writer := bufio.NewWriter(out)
-
       for {
         con, err := in.Accept()
         if err != nil {continue}
-        log.Info("Got connection")
+
+        log.Infof("Connecting to %s",cons)
+        out, err = net.Dial("tcp",cons)
+        if err != nil {
+          log.Errorf("Could not connect: %s",err)
+          return
+        }
 
         reader := bufio.NewReader(con)
-        io.Copy(writer,reader)
+        writer := bufio.NewWriter(out)
+
+        for {
+          written, cerr := io.Copy(writer,reader)
+          log.Infof("Wrote %d",written)
+          if cerr != nil {
+            log.Error(cerr)
+            break
+          }
+        }
+        con.Close()
       }
     }
