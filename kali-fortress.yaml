@@ -23,9 +23,9 @@ spec:
                   configMap:
                     name: tools
 
-                - name: vpn-config
+                - name: vpn-config-fortress
                   secret:
-                    secretName: vpn-fortress
+                    secretName: vpn-config-fortress
                     items:
                       - key: vpn.ovpn
                         path: vpn.ovpn
@@ -43,18 +43,43 @@ spec:
                     items:
                       - key: .tmux.conf
                         path: .tmux.conf
+
+                - name: goproxy
+                  configMap:
+                    name: goproxy
+                    items:
+                      - key: proxy.go
+                        path: proxy.go
+
+                - name: goforward
+                  configMap:
+                    name: goforward
+                    items:
+                      - key: forward.go
+                        path: forward.go
+
                 - name: tmp
                   emptyDir: {}
+
             hostAliases:
               - ip: 10.10.10.21
                 hostnames:
-                - joker.htb
+                  - joker.htb
             containers:
-                - name: kali
+                - name: kali-fortress
                   image: oonray/kali
                   tty: true
                   stdin: true
                   command: ["/bin/sh"]
+                  volumeMounts:
+                    - name: goproxy
+                      mountPath: /data/proxy/proxy.go
+                      subPath: proxy.go
+                    - name: goforward
+                      mountPath: /data/forward/forward.go
+                      subPath: forward.go
+                  ports:
+                    - containerPort: 8081
 
                 - name: openvpn
                   image: ghcr.io/wfg/openvpn-client
@@ -68,11 +93,12 @@ spec:
                     - name: SOCKS_PROXY
                       value: on
                   volumeMounts:
-                    - name: vpn-config
+                    - name: vpn-config-fortress
                       mountPath:  /data/vpn/vpn.ovpn
                       subPath: vpn.ovpn
                   ports:
                     - containerPort: 1080
+
                   resources:
                     limits:
                       memory: "1Gi"
