@@ -5,10 +5,10 @@ RUN apt-get install -y nmap git nginx curl wget golang gcc g++ apt-transport-htt
     s3fs zsh zsh-syntax-highlighting zsh-autosuggestions\
     exploitdb radare2 torsocks proxychains socat tmux \
     python2 python3 python3-pip mono-devel ansible \
-    tree powershell
+    tree powershell netcat-traditional
 
 RUN go get github.com/sirupsen/logrus github.com/gorilla/mux
-RUN apt-get upgrade -y
+RUN go install github.com/gcla/termshark
 
 RUN cp /etc/skel/.zshrc /root/
 RUN chsh -s /bin/zsh
