@@ -192,8 +192,6 @@ data:
     var (
       in net.Listener
       out net.Conn
-      reader []io.Reader
-      writer []io.Writer
 
       lport *string
 
@@ -203,7 +201,6 @@ data:
       cons string
       lcons string
 
-      cerr chan error
       done bool
     )
 
@@ -246,11 +243,11 @@ data:
 
         cerr := make(chan error)
 
-        reader = []io.Reader{}
+        reader := []io.Reader{}
         reader = append(reader,bufio.NewReader(con))
         reader = append(reader,bufio.NewReader(out))
 
-        writer = []io.Writer{}
+        writer := []io.Writer{}
         writer = append(writer,bufio.NewWriter(out))
         writer = append(writer,bufio.NewWriter(con))
 
