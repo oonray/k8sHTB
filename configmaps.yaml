@@ -189,14 +189,11 @@ data:
       log "github.com/sirupsen/logrus"
     )
 
-    //const port int = 8081
-    //const con_port int = 3128
-
     var (
       in net.Listener
       out net.Conn
-      reader io.Reader
-      writer io.Writer
+      reader []io.Reader
+      writer []io.Writer
 
       lport *string
 
@@ -206,6 +203,8 @@ data:
       cons string
       lcons string
 
+      cerr chan error
+      done bool
     )
 
     func argparse(){
@@ -217,6 +216,7 @@ data:
 
     func main() {
       var err error
+      defer func(){done=true}()
 
       argparse()
 
@@ -229,29 +229,57 @@ data:
         log.Infof("Could not listen: %s",err)
         return
       }
+      defer in.Close()
 
       for {
         con, err := in.Accept()
-        if err != nil {continue}
+        if err != nil {
+          log.Errorf("Could not accept: %s",err)
+          continue}
+        defer con.Close()
 
         log.Infof("Connecting to %s",cons)
         out, err = net.Dial("tcp",cons)
         if err != nil {
           log.Errorf("Could not connect: %s",err)
-          return
-        }
+          continue}
 
-        reader := bufio.NewReader(con)
-        writer := bufio.NewWriter(out)
+        cerr := make(chan error)
 
-        for {
-          written, cerr := io.Copy(writer,reader)
-          log.Infof("Wrote %d",written)
-          if cerr != nil {
-            log.Error(cerr)
-            break
+        reader = []io.Reader{}
+        reader = append(reader,bufio.NewReader(con))
+        reader = append(reader,bufio.NewReader(out))
+
+        writer = []io.Writer{}
+        writer = append(writer,bufio.NewWriter(out))
+        writer = append(writer,bufio.NewWriter(con))
+
+        go func(){
+          for {
+            _, err := io.Copy(writer[0],reader[0])
+            if err != nil {
+              cerr <- err
+              break}
+            if done {break}
           }
-        }
-        con.Close()
+        }()
+
+        go func(){
+          for {
+            _, err := io.Copy(writer[1],reader[1])
+            if err != nil {
+              cerr <- err
+              break}
+            if done {break}
+          }
+        }()
+
+        go func(){
+          for {
+            err := <-cerr
+            log.Infof("IO Error: %s",err)
+            if done {break}
+          }
+        }()
       }
     }
