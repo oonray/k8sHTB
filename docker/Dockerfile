@@ -26,7 +26,8 @@ RUN git clone --recurse https://github.com/carlospolop/privilege-escalation-awes
     git clone --recurse https://github.com/GhostPack/Seatbelt.git &&\
     git clone --recurse https://github.com/samratashok/ADModule.git &&\
     git clone --recurse https://github.com/Sq00ky/LeetLinked &&\
-    git clone --recurse https://github.com/carlospolop/PEASS-ng.git
+    git clone --recurse https://github.com/carlospolop/PEASS-ng.git &&\
+    git clone --recurse https://github.com/oonray/BlackHatProgramming.git
 
 WORKDIR /root
 
