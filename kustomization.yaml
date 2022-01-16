@@ -8,5 +8,5 @@ resources:
   - secrets.enc.endgame.json
   - service.yaml
   - kali.yaml
-  - kali-fortress.yaml
-  - kali-endgame.yaml
+#  - kali-fortress.yaml
+#  - kali-endgame.yaml
