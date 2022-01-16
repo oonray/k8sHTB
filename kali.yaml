@@ -66,6 +66,7 @@ spec:
                   tty: true
                   stdin: true
                   command: ["/bin/sh"]
+                  imagePullPolicy: Always
                   volumeMounts:
                     - name: vpn-config
                       mountPath: /data/vpn/vpn.ovpn
