@@ -65,7 +65,6 @@ spec:
                     privileged: true
                   tty: true
                   stdin: true
-                  command: ["/bin/sh"]
                   imagePullPolicy: Always
                   volumeMounts:
                     - name: vpn-config
