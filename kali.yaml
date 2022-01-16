@@ -43,20 +43,6 @@ spec:
                       - key: .tmux.conf
                         path: .tmux.conf
 
-                - name: goproxy
-                  configMap:
-                    name: goproxy
-                    items:
-                      - key: proxy.go
-                        path: proxy.go
-
-                - name: goforward
-                  configMap:
-                    name: goforward
-                    items:
-                      - key: forward.go
-                        path: forward.go
-
                 - name: tmp
                   emptyDir: {}
 
@@ -70,35 +56,19 @@ spec:
                   tty: true
                   stdin: true
                   command: ["/bin/sh"]
-                  volumeMounts:
-                    - name: goproxy
-                      mountPath: /data/proxy/proxy.go
-                      subPath: proxy.go
-                    - name: goforward
-                      mountPath: /data/forward/forward.go
-                      subPath: forward.go
                   ports:
                     - containerPort: 8081
 
                 - name: openvpn
-                  image: ghcr.io/wfg/openvpn-client
+                  image: oonray/blackhat:latest
                   securityContext:
                     privileged: true
-                  env:
-                    - name: KILL_SWITCH
-                      value: off
-                    - name: VPN_CONFIG_FILE
-                      value: vpn.ovpn
-                    - name: SOCKS_PROXY
-                      value: on
+                  tty: true
+                  stdin: true
+                  command: ["/bin/sh"]
                   volumeMounts:
                     - name: vpn-config
-                      mountPath:  /data/vpn/vpn.ovpn
+                      mountPath: /data/vpn/vpn.ovpn
                       subPath: vpn.ovpn
                   ports:
                     - containerPort: 1080
-
-                  resources:
-                    limits:
-                      memory: "1Gi"
-                      cpu: "0.5"
