@@ -20,14 +20,13 @@ RUN mkdir .git
 WORKDIR /root/.git
 
 RUN git clone --recurse https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite  &&\
-    git clone --recurse https://github.com/bats3c/shad0w.git &&\
     git clone --recurse https://github.com/sherlock-project/sherlock.git &&\
     git clone --recurse https://github.com/PowerShellMafia/PowerSploit.git &&\
     git clone --recurse https://github.com/GhostPack/Seatbelt.git &&\
     git clone --recurse https://github.com/samratashok/ADModule.git &&\
-    git clone --recurse https://github.com/Sq00ky/LeetLinked &&\
     git clone --recurse https://github.com/carlospolop/PEASS-ng.git &&\
-    git clone --recurse https://github.com/oonray/BlackHatProgramming.git
+    git clone --recurse https://github.com/oonray/BlackHatProgramming.git &&\
+    git clone --recurse https://github.com/byt3bl33d3r/OffensiveDLR.git
 
 WORKDIR /root
 
