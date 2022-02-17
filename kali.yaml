@@ -42,13 +42,17 @@ spec:
                     items:
                       - key: .tmux.conf
                         path: .tmux.conf
-                - name: htb
+                - name: htb-cl
                   persistentVolumeClaim:
                     claimName: htb
             hostAliases:
               - ip: 10.10.10.21
                 hostnames:
                   - joker.htb
+              - ip: 10.10.11.133
+                hostnames:
+                  - steamcloud.htb
+                  - steamcloud
             containers:
                 - name: kali
                   image: oonray/kali
@@ -57,7 +61,7 @@ spec:
                   command: ["/bin/sh"]
                   volumeMounts:
                     - mountPath: /home/kali/.htb
-                      name: htb
+                      name: htb-cl
                   ports:
                     - containerPort: 8081
 
