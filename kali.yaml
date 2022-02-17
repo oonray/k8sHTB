@@ -42,10 +42,9 @@ spec:
                     items:
                       - key: .tmux.conf
                         path: .tmux.conf
-
-                - name: tmp
-                  emptyDir: {}
-
+                - name: htb
+                  persistentVolumeClaim:
+                    claimName: htb
             hostAliases:
               - ip: 10.10.10.21
                 hostnames:
@@ -56,6 +55,9 @@ spec:
                   tty: true
                   stdin: true
                   command: ["/bin/sh"]
+                  volumeMounts:
+                    - mountPath: /home/kali/.htb
+                      name: htb
                   ports:
                     - containerPort: 8081
 
