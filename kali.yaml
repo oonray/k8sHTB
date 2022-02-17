@@ -43,8 +43,8 @@ spec:
                       - key: .tmux.conf
                         path: .tmux.conf
                 - name: htb-cl
-                  persistentVolumeClaim:
-                    claimName: htb
+                  hostPath:
+                    path: /disk1/htb
             hostAliases:
               - ip: 10.10.10.21
                 hostnames:
