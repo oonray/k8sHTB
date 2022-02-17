@@ -60,7 +60,7 @@ spec:
                   stdin: true
                   command: ["/bin/sh"]
                   volumeMounts:
-                    - mountPath: /home/kali/.htb
+                    - mountPath: /root/.htb/
                       name: htb-cl
                   ports:
                     - containerPort: 8081
