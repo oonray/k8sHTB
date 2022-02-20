@@ -16,7 +16,7 @@ spec:
         spec:
             dnsConfig:
               nameservers:
-                - 8.8.8.8
+                - 192.168.10.40
             volumes:
                 - name: tools
                   configMap:
@@ -45,14 +45,6 @@ spec:
                 - name: htb-cl
                   hostPath:
                     path: /disk1/htb
-            hostAliases:
-              - ip: 10.10.10.21
-                hostnames:
-                  - joker.htb
-              - ip: 10.10.11.133
-                hostnames:
-                  - steamcloud.htb
-                  - steamcloud
             containers:
                 - name: kali
                   image: oonray/kali
