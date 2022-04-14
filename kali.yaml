@@ -47,8 +47,8 @@ spec:
                   configMap:
                     name: kali-sshd
                     items:
-                      - key: ssh_config
-                        path: ssh_config
+                      - key: sshd_config
+                        path: sshd_config
 
                 - name: htb-cl
                   hostPath:
@@ -59,6 +59,7 @@ spec:
                   tty: true
                   stdin: true
                   command: ["/bin/sh"]
+                  imagePullPolicy: Always
                   volumeMounts:
                     - mountPath: /root/.htb/
                       name: htb-cl
