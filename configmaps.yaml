@@ -32,251 +32,128 @@ data:
 ---
 kind: ConfigMap
 metadata:
-  name: sockd-conf
+  name: kali-sshd
 apiVersion: v1
 data:
-  sockd.conf: |-
-    # Logging
-    logoutput: /var/log/sockd.log
-    errorlog: stderr
+  sshd_config: |-
+  # This is the sshd server system-wide configuration file.  See
+  # sshd_config(5) for more information.
 
-    # Server address specification
-    internal: eth0 port = 1080
-    external: tun0
+  # This sshd was compiled with PATH=/usr/local/bin:/usr/bin:/bin:/usr/games
 
-    # Authentication methods
-    clientmethod: none
-    socksmethod: none
+  # The strategy used for options in the default sshd_config shipped with
+  # OpenSSH is to specify options with their default value where
+  # possible, but leave them commented.  Uncommented options override the
+  # default value.
 
-    # Server identities
-    user.unprivileged: sockd
+  Include /etc/ssh/sshd_config.d/*.conf
 
-    ##
-    ## SOCKS client access rules
-    ##
-    # Rule processing stops at the first match; no match results in blocking
+  #Port 22
+  #AddressFamily any
+  #ListenAddress 0.0.0.0
+  #ListenAddress ::
 
-    # Block access to socks server from 192.0.2.22
-    # client block {
-    #       # Block connections from 192.0.2.22/32
-    #       from: 192.0.2.22/24 to: 0.0.0.0/0
-    #       log: error # connect disconnect
-    # }
+  #HostKey /etc/ssh/ssh_host_rsa_key
+  #HostKey /etc/ssh/ssh_host_ecdsa_key
+  #HostKey /etc/ssh/ssh_host_ed25519_key
 
-    # Allow all connections
-    client pass {
-        from: 0.0.0.0/0 to: 0.0.0.0/0
-        log: error connect disconnect
-    }
+  # Ciphers and keying
+  #RekeyLimit default none
 
-    ##
-    ## SOCKS command rules
-    ##
-    # Rule processing stops at the first match; no match results in blocking
+  # Logging
+  #SyslogFacility AUTH
+  #LogLevel INFO
 
-    # Block communication with www.example.org
-    # socks block {
-    #        from: 0.0.0.0/0 to: www.example.org
-    #        command: bind connect udpassociate
-    #        log: error # connect disconnect iooperation
-    # }
+  # Authentication:
 
-    # Generic pass statement - bind/outgoing traffic
-    socks pass {
-        from: 0.0.0.0/0 to: 0.0.0.0/0
-        command: bind connect udpassociate
-        log: error connect disconnect # iooperation
-    }
+  #LoginGraceTime 2m
+  PermitRootLogin yes
+  #StrictModes yes
+  #MaxAuthTries 6
+  #MaxSessions 10
 
-    # Block incoming connections/packets from ftp.example.org
-    # socks block {
-    #        from: ftp.example.org to: 0.0.0.0/0
-    #        command: bindreply udpreply
-    #        log: error # connect disconnect iooperation
-    # }
+  #PubkeyAuthentication yes
 
-    # Generic pass statement for incoming connections/packets
-    socks pass {
-        from: 0.0.0.0/0 to: 0.0.0.0/0
-        command: bindreply udpreply
-        log: error connect disconnect # iooperation
-    }
+  # Expect .ssh/authorized_keys2 to be disregarded by default in future.
+  #AuthorizedKeysFile     .ssh/authorized_keys .ssh/authorized_keys2
 
----
-kind: ConfigMap
-metadata:
-  name: goproxy
-apiVersion: v1
-data:
-  proxy.go: |-
-    package main
+  #AuthorizedPrincipalsFile none
 
-    import (
-      "fmt"
-      "flag"
-      "net/http"
-      "net/http/httputil"
-      "net/url"
-      "errors"
-      "github.com/gorilla/mux"
-      log "github.com/sirupsen/logrus"
-    )
+  #AuthorizedKeysCommand none
+  #AuthorizedKeysCommandUser nobody
 
-    var (
-      proxies		= make(map[string]*httputil.ReverseProxy)
-      proxy *string
-      others []string
-    )
+  # For this to work you will also need host keys in /etc/ssh/ssh_known_hosts
+  #HostbasedAuthentication no
+  # Change to yes if you don't trust ~/.ssh/known_hosts for
+  # HostbasedAuthentication
+  #IgnoreUserKnownHosts no
+  # Don't read the user's ~/.rhosts and ~/.shosts files
+  #IgnoreRhosts yes
 
-    func proxy_init(){
-      remote, err := url.Parse(*proxy)
-      if (err!=nil){
-        log.Errorf("Unable To Parse Proxy Target: %s",err)
-      }
+  # To disable tunneled clear text passwords, change to no here!
+  #PasswordAuthentication yes
+  #PermitEmptyPasswords no
 
-      for _,v := range others {
-        proxies[v] = httputil.NewSingleHostReverseProxy(remote)
-      }
-    }
+  # Change to yes to enable challenge-response passwords (beware issues with
+  # some PAM modules and threads)
+  KbdInteractiveAuthentication no
 
-    func argparse() error {
-      proxy = flag.String("p,proxy","","The proxy to forward to")
-      flag.Parse()
-      others = flag.Args()
+  # Kerberos options
+  #KerberosAuthentication no
+  #KerberosOrLocalPasswd yes
+  #KerberosTicketCleanup yes
+  #KerberosGetAFSToken no
 
-      if(*proxy == ""){
-        return errors.New("Target proxy needs to be decleared")
-      }
+  # GSSAPI options
+  #GSSAPIAuthentication no
+  #GSSAPICleanupCredentials yes
+  #GSSAPIStrictAcceptorCheck yes
+  #GSSAPIKeyExchange no
 
-      if(len(others) <= 0){
-        return errors.New(fmt.Sprintf("Needs more than %d hosts",len(others)))
-      }
+  # Set this to 'yes' to enable PAM authentication, account processing,
+  # and session processing. If this is enabled, PAM authentication will
+  # be allowed through the KbdInteractiveAuthentication and
+  # PasswordAuthentication.  Depending on your PAM configuration,
+  # PAM authentication via KbdInteractiveAuthentication may bypass
+  # the setting of "PermitRootLogin without-password".
+  # If you just want the PAM account and session checks to run without
+  # PAM authentication, then enable this but set PasswordAuthentication
+  # and KbdInteractiveAuthentication to 'no'.
+  UsePAM yes
 
-      return nil
-    }
+  #AllowAgentForwarding yes
+  AllowTcpForwarding yes
+  #GatewayPorts no
+  X11Forwarding yes
+  #X11DisplayOffset 10
+  #X11UseLocalhost yes
+  PermitTTY yes
+  PrintMotd no
+  #PrintLastLog yes
+  #TCPKeepAlive yes
+  #PermitUserEnvironment no
+  #Compression delayed
+  #ClientAliveInterval 0
+  #ClientAliveCountMax 3
+  #UseDNS no
+  #PidFile /run/sshd.pid
+  #MaxStartups 10:30:100
+  #PermitTunnel no
+  #ChrllootDirectory none
+  #VersionAddendum none
 
-    func main() {
-      err := argparse()
-      if err != nil {
-        log.Fatal(err)
-      }
+  # no default banner path
+  #Banner none
 
-      proxy_init()
+  # Allow client to pass locale environment variables
+  AcceptEnv LANG LC_*
 
-      r := mux.NewRouter()
-      for host, proxy := range proxies {
-        r.Host(host).Handler(proxy)
-      }
+  # override default of no subsystems
+  Subsystem       sftp    /usr/lib/openssh/sftp-server
 
-      log.Fatal(http.ListenAndServe(":8081",r))
-    }
-
----
-kind: ConfigMap
-metadata:
-  name: goforward
-apiVersion: v1
-data:
-  forward.go: |-
-    package main
-
-    import (
-      "fmt"
-      "flag"
-      "net"
-      "bufio"
-      "io"
-      log "github.com/sirupsen/logrus"
-    )
-
-    var (
-      in net.Listener
-      out net.Conn
-
-      lport *string
-
-      host *string
-      port *string
-
-      cons string
-      lcons string
-
-      done bool
-    )
-
-    func argparse(){
-      lport = flag.String("lp","","The port to listen on")
-      host = flag.String("H","","The host to conenct to")
-      port = flag.String("P","","The port to connect to")
-      flag.Parse()
-    }
-
-    func main() {
-      var err error
-      defer func(){done=true}()
-
-      argparse()
-
-      cons = fmt.Sprintf("%s:%s",*host,*port)
-      lcons = fmt.Sprintf(":%s",*lport)
-
-      log.Infof("Listening on %s",lcons)
-      in, err = net.Listen("tcp",lcons)
-      if err != nil {
-        log.Infof("Could not listen: %s",err)
-        return
-      }
-      defer in.Close()
-
-      for {
-        con, err := in.Accept()
-        if err != nil {
-          log.Errorf("Could not accept: %s",err)
-          continue}
-        defer con.Close()
-
-        log.Infof("Connecting to %s",cons)
-        out, err = net.Dial("tcp",cons)
-        if err != nil {
-          log.Errorf("Could not connect: %s",err)
-          continue}
-
-        cerr := make(chan error)
-
-        reader := []io.Reader{}
-        reader = append(reader,bufio.NewReader(con))
-        reader = append(reader,bufio.NewReader(out))
-
-        writer := []io.Writer{}
-        writer = append(writer,bufio.NewWriter(out))
-        writer = append(writer,bufio.NewWriter(con))
-
-        go func(){
-          for {
-            _, err := io.Copy(writer[0],reader[0])
-            if err != nil {
-              cerr <- err
-              break}
-            if done {break}
-          }
-        }()
-
-        go func(){
-          for {
-            _, err := io.Copy(writer[1],reader[1])
-            if err != nil {
-              cerr <- err
-              break}
-            if done {break}
-          }
-        }()
-
-        go func(){
-          for {
-            err := <-cerr
-            log.Infof("IO Error: %s",err)
-            if done {break}
-          }
-        }()
-      }
-    }
+  # Example of overriding settings on a per-user basis
+  #Match User anoncvs
+  #       X11Forwarding no
+  #       AllowTcpForwarding no
+  #       PermitTTY no
+  #       ForceCommand cvs server

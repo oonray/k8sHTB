@@ -16,7 +16,7 @@ spec:
         spec:
             dnsConfig:
               nameservers:
-                - 192.168.10.40
+                - 192.168.10.142
             volumes:
                 - name: tools
                   configMap:
@@ -42,6 +42,14 @@ spec:
                     items:
                       - key: .tmux.conf
                         path: .tmux.conf
+
+                - name: ssh-conf
+                  configMap:
+                    name: kali-sshd
+                    items:
+                      - key: ssh_config
+                        path: ssh_config
+
                 - name: htb-cl
                   hostPath:
                     path: /disk1/htb
@@ -54,6 +62,9 @@ spec:
                   volumeMounts:
                     - mountPath: /root/.htb/
                       name: htb-cl
+                    - name: ssh-conf
+                      mountPath: /etc/ssh/sshd_config
+                      subPath: sshd_config
                   ports:
                     - containerPort: 8000
                     - containerPort: 22
