@@ -8,8 +8,6 @@ RUN apt-get install -y nmap git nginx curl wget golang gcc g++ apt-transport-htt
     python2 python3 python3-pip mono-devel ansible \
     tree powershell netcat-traditional neovim 
 
-RUN go get github.com/sirupsen/logrus github.com/gorilla/mux github.com/gcla/termshark
-
 RUN cp /etc/skel/.zshrc /root/
 RUN chsh -s /bin/zsh
 
