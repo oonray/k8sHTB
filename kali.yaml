@@ -55,7 +55,8 @@ spec:
                     - mountPath: /root/.htb/
                       name: htb-cl
                   ports:
-                    - containerPort: 8081
+                    - containerPort: 8000
+                    - containerPort: 22
 
                 - name: openvpn
                   image: oonray/blackhat:latest
