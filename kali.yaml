@@ -14,72 +14,94 @@ spec:
             labels:
                 app: kali
         spec:
-            dnsConfig:
-              nameservers:
-                - 192.168.10.142
+            serviceAccountName: hackthebox
             volumes:
-                - name: tools
-                  configMap:
-                    name: tools
-
-                - name: vpn-config
-                  secret:
-                    secretName: vpn-config
-                    items:
-                      - key: vpn.ovpn
-                        path: vpn.ovpn
-
-                - name: install-script
-                  configMap:
-                    name: kali-insall-script
-                    items:
-                      - key: install.sh
-                        path: install.sh
-
                 - name: tmux-conf
                   configMap:
                     name: tmux
                     items:
                       - key: .tmux.conf
                         path: .tmux.conf
-
-                - name: ssh-conf
-                  configMap:
-                    name: kali-sshd
+                - name: vpn-config
+                  secret:
+                    secretName: vpn-config
                     items:
-                      - key: sshd_config
-                        path: sshd_config
-
+                      - key: vpn.ovpn
+                        path: vpn.ovpn
                 - name: htb-cl
                   hostPath:
                     path: /disk1/htb
             containers:
                 - name: kali
-                  image: oonray/kali
+                  image: oonray/kali:1.0.2
                   tty: true
                   stdin: true
                   command: ["/bin/sh"]
-                  imagePullPolicy: Always
                   volumeMounts:
                     - mountPath: /root/.htb/
                       name: htb-cl
-                    - name: ssh-conf
-                      mountPath: /etc/ssh/sshd_config
-                      subPath: sshd_config
                   ports:
-                    - containerPort: 8000
-                    - containerPort: 22
+                    - containerPort: 8081
 
                 - name: openvpn
-                  image: oonray/blackhat:latest
+                  image: oonray/vpn:1.0.3
                   securityContext:
                     privileged: true
                   tty: true
                   stdin: true
                   imagePullPolicy: Always
-                  volumeMounts:
-                    - name: vpn-config
-                      mountPath: /data/vpn/vpn.ovpn
-                      subPath: vpn.ovpn
+                  command: ["openvpn","/root/.vpn/vpn.ovpn"]
                   ports:
                     - containerPort: 1080
+                  volumeMounts:
+                    - mountPath: /root/.vpn/vpn.ovpn
+                      name: vpn-config
+                      subPath: vpn.ovpn
+
+                - name: sliver
+                  securityContext:
+                    privileged: true
+                  tty: true
+                  stdin: true
+                  command:
+                    - '/opt/sliver-server'
+                    - 'daemon'
+                  image: oonray/c2:1.0.2
+                  volumeMounts:
+                    - mountPath: /root/.htb/
+                      name: htb-cl
+                  ports:
+                    - containerPort: 31337
+                    - containerPort: 8080
+                    - containerPort: 443
+                    - containerPort: 56
+
+                - name: metasploit
+                  securityContext:
+                    privileged: true
+                  tty: true
+                  stdin: true
+                  command:
+                    - 'bash'
+                  image: oonray/metasploit:1.0.1
+                  volumeMounts:
+                    - mountPath: /root/.htb/
+                      name: htb-cl
+                  ports:
+                    - containerPort: 31337
+                    - containerPort: 8080
+                    - containerPort: 443
+                    - containerPort: 56
+
+                - name: neo4j
+                  securityContext:
+                    privileged: true
+                  tty: true
+                  stdin: true
+                  image: neo4j
+                  volumeMounts:
+                    - mountPath: /root/.htb/
+                      name: htb-cl
+                  ports:
+                      - containerPort: 7474
+                      - containerPort: 7687
