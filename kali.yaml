@@ -14,7 +14,6 @@ spec:
             labels:
                 app: kali
         spec:
-            serviceAccountName: hackthebox
             volumes:
                 - name: tmux-conf
                   configMap:
@@ -57,6 +56,13 @@ spec:
                     - mountPath: /root/.vpn/vpn.ovpn
                       name: vpn-config
                       subPath: vpn.ovpn
+                  resources:
+                    limits:
+                      cpu: "2"
+                      memory: "1Gi"
+                    requests:
+                      cpu: "1"
+                      memory: "500Mi"
 
                 - name: sliver
                   securityContext:
@@ -93,15 +99,3 @@ spec:
                     - containerPort: 443
                     - containerPort: 56
 
-                - name: neo4j
-                  securityContext:
-                    privileged: true
-                  tty: true
-                  stdin: true
-                  image: neo4j
-                  volumeMounts:
-                    - mountPath: /root/.htb/
-                      name: htb-cl
-                  ports:
-                      - containerPort: 7474
-                      - containerPort: 7687
