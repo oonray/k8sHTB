@@ -3,22 +3,15 @@ kind: Service
 metadata:
   name: proxy
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: kali
   ports:
     - name: "1080"
       protocol: TCP
-      port: 1080
-    - name: "sliver"
-      protocol: TCP
-      port: 31337
+      port: 1082
+      targetPort: 1080
     - name: "8081"
       protocol: TCP
       port: 8081
-    - name: "22"
-      protocol: TCP
-      port: 22
-    - name: "python"
-      protocol: TCP
-      port: 8000
+      targetPort: 8080

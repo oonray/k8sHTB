@@ -56,6 +56,8 @@ spec:
                     - mountPath: /root/.vpn/vpn.ovpn
                       name: vpn-config
                       subPath: vpn.ovpn
+                    - mountPath: /root/.htb/
+                      name: htb-cl
                   resources:
                     limits:
                       cpu: "2"
