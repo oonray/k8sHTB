@@ -3,6 +3,6 @@ kind: Kustomization
 namespace: htb
 resources:
   - configmaps.yaml
-  - secrets.dec.yaml
+  - secrets.enc.json
   - service.yaml
   - kali.yaml
