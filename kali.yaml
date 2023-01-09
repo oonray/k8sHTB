@@ -1,103 +1,102 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: kali
-    labels:
-      app: kali
+  name: kali
+  labels:
+    app: kali
 spec:
-    replicas: 1
-    selector:
-        matchLabels:
-            app: kali
-    template:
-        metadata:
-            labels:
-                app: kali
-        spec:
-            volumes:
-                - name: tmux-conf
-                  configMap:
-                    name: tmux
-                    items:
-                      - key: .tmux.conf
-                        path: .tmux.conf
-                - name: vpn-config
-                  secret:
-                    secretName: vpn-config
-                    items:
-                      - key: vpn.ovpn
-                        path: vpn.ovpn
-                - name: htb-cl
-                  hostPath:
-                    path: /disk1/htb
-            containers:
-                - name: kali
-                  image: oonray/kali:1.0.5
-                  tty: true
-                  stdin: true
-                  command: ["/bin/sh"]
-                  volumeMounts:
-                    - mountPath: /root/.htb/
-                      name: htb-cl
-                  ports:
-                    - containerPort: 8081
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kali
+  template:
+    metadata:
+      labels:
+        app: kali
+    spec:
+      volumes:
+        - name: tmux-conf
+          configMap:
+            name: tmux
+            items:
+              - key: .tmux.conf
+                path: .tmux.conf
+        - name: vpn-config
+          secret:
+            secretName: vpn-config
+            items:
+              - key: vpn.ovpn
+                path: vpn.ovpn
+        - name: htb-cl
+          hostPath:
+            path: /disk1/htb
+      containers:
+        - name: kali
+          image: oonray/kali:1.0.6
+          tty: true
+          stdin: true
+          command: ["/bin/sh"]
+          volumeMounts:
+            - mountPath: /root/.htb/
+              name: htb-cl
+          ports:
+            - containerPort: 8081
 
-                - name: openvpn
-                  image: oonray/vpn:1.0.18
-                  securityContext:
-                    privileged: true
-                  tty: true
-                  stdin: true
-                  imagePullPolicy: Always
-                  command: ["openvpn","/root/.vpn/vpn.ovpn"]
-                  ports:
-                    - containerPort: 1080
-                  volumeMounts:
-                    - mountPath: /root/.vpn/vpn.ovpn
-                      name: vpn-config
-                      subPath: vpn.ovpn
-                    - mountPath: /root/.htb/
-                      name: htb-cl
-                  resources:
-                    limits:
-                      cpu: "2"
-                      memory: "1Gi"
-                    requests:
-                      cpu: "1"
-                      memory: "500Mi"
+        - name: openvpn
+          image: oonray/vpn:1.0.18
+          securityContext:
+            privileged: true
+          tty: true
+          stdin: true
+          imagePullPolicy: Always
+          command: ["openvpn", "/root/.vpn/vpn.ovpn"]
+          ports:
+            - containerPort: 1080
+          volumeMounts:
+            - mountPath: /root/.vpn/vpn.ovpn
+              name: vpn-config
+              subPath: vpn.ovpn
+            - mountPath: /root/.htb/
+              name: htb-cl
+          resources:
+            limits:
+              cpu: "2"
+              memory: "1Gi"
+            requests:
+              cpu: "1"
+              memory: "500Mi"
 
-                - name: sliver
-                  securityContext:
-                    privileged: true
-                  tty: true
-                  stdin: true
-                  command:
-                    - '/opt/sliver-server'
-                    - 'daemon'
-                  image: oonray/c2:1.0.2
-                  volumeMounts:
-                    - mountPath: /root/.htb/
-                      name: htb-cl
-                  ports:
-                    - containerPort: 31337
-                    - containerPort: 8080
-                    - containerPort: 443
-                    - containerPort: 56
+        - name: sliver
+          securityContext:
+            privileged: true
+          tty: true
+          stdin: true
+          command:
+            - "/opt/sliver-server"
+            - "daemon"
+          image: oonray/c2:1.0.2
+          volumeMounts:
+            - mountPath: /root/.htb/
+              name: htb-cl
+          ports:
+            - containerPort: 31337
+            - containerPort: 8080
+            - containerPort: 443
+            - containerPort: 56
 
-                - name: metasploit
-                  securityContext:
-                    privileged: true
-                  tty: true
-                  stdin: true
-                  command:
-                    - 'bash'
-                  image: oonray/metasploit:1.0.1
-                  volumeMounts:
-                    - mountPath: /root/.htb/
-                      name: htb-cl
-                  ports:
-                    - containerPort: 31337
-                    - containerPort: 8080
-                    - containerPort: 443
-                    - containerPort: 56
-
+        - name: metasploit
+          securityContext:
+            privileged: true
+          tty: true
+          stdin: true
+          command:
+            - "bash"
+          image: oonray/metasploit:1.0.1
+          volumeMounts:
+            - mountPath: /root/.htb/
+              name: htb-cl
+          ports:
+            - containerPort: 31337
+            - containerPort: 8080
+            - containerPort: 443
+            - containerPort: 56
