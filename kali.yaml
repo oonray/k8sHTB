@@ -15,6 +15,10 @@ spec:
         app: kali
     spec:
       volumes:
+        - name: runner-config
+          hostPath:
+            path: /disk1/htb/runner
+            type: DirectoryOrCreate
         - name: tmux-conf
           configMap:
             name: tmux
@@ -41,6 +45,12 @@ spec:
               name: htb-cl
           ports:
             - containerPort: 8081
+
+        - name: runner
+          image: gitlab/gitlab-runner:latest
+          volumeMounts:
+            - mountPath: /etc/gitlab-runner
+              name: runner-config
 
         - name: openvpn
           image: oonray/vpn:1.0.18
