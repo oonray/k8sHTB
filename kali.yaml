@@ -31,7 +31,7 @@ spec:
                 path: .tmux.conf
         - name: runner-conf
           configMap:
-            name: runner-conf
+            name: runner-config
             items:
               - key: config.toml
                 path: config.toml
