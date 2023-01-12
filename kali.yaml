@@ -53,6 +53,8 @@ spec:
         - name: runner
           image: gitlab/gitlab-runner:latest
           volumeMounts:
+            - mountPath: /root/.htb/
+              name: htb-cl
             - mountPath: /etc/gitlab-runner
               name: runner-config
             - mountPath: /etc/gitlab-runner/certs
