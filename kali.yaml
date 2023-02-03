@@ -46,7 +46,7 @@ spec:
             path: /disk1/htb
       containers:
         - name: kali
-          image: oonray/kali:1.0.6
+          image: oonray/kali:1.1.1
           tty: true
           stdin: true
           command: ["/bin/sh"]
@@ -56,19 +56,8 @@ spec:
           ports:
             - containerPort: 8081
 
-        - name: runner
-          image: gitlab/gitlab-runner:latest
-          volumeMounts:
-            - mountPath: /root/.htb/
-              name: htb-cl
-            - mountPath: /etc/gitlab-runner
-              name: runner-path
-            - mountPath: /etc/gitlab-runner/config.toml
-              subPath: config.toml
-              name: runner-conf
-
         - name: openvpn
-          image: oonray/vpn:1.0.18
+          image: oonray/vpn:1.1.1
           securityContext:
             privileged: true
           tty: true
@@ -91,7 +80,7 @@ spec:
               cpu: "1"
               memory: "500Mi"
 
-        - name: sliver
+        - name: c2
           securityContext:
             privileged: true
           tty: true
@@ -99,24 +88,7 @@ spec:
           command:
             - "/opt/sliver-server"
             - "daemon"
-          image: oonray/c2:1.0.2
-          volumeMounts:
-            - mountPath: /root/.htb/
-              name: htb-cl
-          ports:
-            - containerPort: 31337
-            - containerPort: 8080
-            - containerPort: 443
-            - containerPort: 56
-
-        - name: metasploit
-          securityContext:
-            privileged: true
-          tty: true
-          stdin: true
-          command:
-            - "bash"
-          image: oonray/metasploit:1.0.1
+          image: oonray/c2:1.1.1
           volumeMounts:
             - mountPath: /root/.htb/
               name: htb-cl
