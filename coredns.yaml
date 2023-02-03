@@ -1,12 +1,33 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: coredns-htb
+  name: coredns
   namespace: kube-system
 data:
-  htb.server: | # All custom server files must have a “.server” file extension.
-    # Change example.com to the domain you wish to forward.
+  Corefile: |
+    .:53 {
+        errors
+        health
+        ready
+        kubernetes cluster.local in-addr.arpa ip6.arpa {
+          pods insecure
+          fallthrough in-addr.arpa ip6.arpa
+        }
+        hosts /etc/coredns/NodeHosts {
+          ttl 60
+          reload 15s
+          fallthrough
+        }
+        prometheus :9153
+        forward . 172.16.0.1
+        cache 30
+        loop
+        reload
+        loadbalance
+    }
+
     htb {
-      # Change 1.1.1.1 to your customer DNS resolver.
       forward . dns.htb.svc.cluster.local
     }
+
+    import /etc/coredns/custom/*.server
