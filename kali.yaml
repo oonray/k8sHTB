@@ -46,7 +46,7 @@ spec:
             path: /disk1/htb
       containers:
         - name: kali
-          image: oonray/kali:1.1.1
+          image: oonray/kali:1.1.4
           tty: true
           stdin: true
           command: ["/bin/sh"]
@@ -57,7 +57,7 @@ spec:
             - containerPort: 8081
 
         - name: openvpn
-          image: oonray/vpn:1.1.1
+          image: oonray/vpn:1.1.4
           securityContext:
             privileged: true
           tty: true
@@ -88,7 +88,7 @@ spec:
           command:
             - "/opt/sliver-server"
             - "daemon"
-          image: oonray/c2:1.1.1
+          image: oonray/c2:1.1.4
           volumeMounts:
             - mountPath: /root/.htb/
               name: htb-cl
