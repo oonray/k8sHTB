@@ -4,6 +4,7 @@ namespace: htb
 resources:
   - namespace.yaml
   - configmaps.yaml
+  - coredns.yaml
   - secrets.enc.json
   - service.yaml
   - kali.yaml

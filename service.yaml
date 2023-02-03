@@ -7,7 +7,7 @@ spec:
   selector:
     app: kali
   ports:
-    - name: "proxy"
+    - name: "prox"
       protocol: TCP
       port: 1080
     - name: "8081"
