@@ -25,6 +25,8 @@ spec:
           imagePullPolicy: Always
           command:
             - "dns"
+            - "-H"
+            - "0.0.0.0"
             - "precious.htb:10.10.11.189"
           ports:
             - containerPort: 53
