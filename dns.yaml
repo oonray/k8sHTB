@@ -1,0 +1,50 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kali-dns
+  labels:
+    app: kali-dns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kali-dns
+  template:
+    metadata:
+      labels:
+        app: kali-dns
+    spec:
+      containers:
+        - name: openvpn
+          image: oonray/vpn:v1.1.5
+          securityContext:
+            privileged: true
+          tty: true
+          stdin: true
+          imagePullPolicy: Always
+          command:
+            - "dns"
+            - "precious.htb:10.10.11.189"
+          ports:
+            - containerPort: 53
+          resources:
+            limits:
+              cpu: "2"
+              memory: "1Gi"
+            requests:
+              cpu: "1"
+              memory: "500Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dns
+spec:
+  type: ClusterIP
+  selector:
+    app: kali-dns
+  ports:
+    - name: "dns"
+      protocol: TCP
+      port: 53

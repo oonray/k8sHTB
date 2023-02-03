@@ -6,7 +6,7 @@ metadata:
 data:
   htb.server: | # All custom server files must have a “.server” file extension.
     # Change example.com to the domain you wish to forward.
-    precious.htb {
+    htb {
       # Change 1.1.1.1 to your customer DNS resolver.
-      forward . 10.10.11.189
+      forward . 127.0.0.1
     }
