@@ -28,6 +28,7 @@ spec:
             - "-H"
             - "0.0.0.0"
             - "precious.htb:10.10.11.189"
+            - "stocker.htb:10.10.11.196"
           ports:
             - containerPort: 53
           resources:
