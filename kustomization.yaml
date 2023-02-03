@@ -5,6 +5,7 @@ resources:
   - namespace.yaml
   - configmaps.yaml
   - dns.yaml
+  - coredns.yaml
   - secrets.enc.json
   - service.yaml
   - kali.yaml
