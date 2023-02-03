@@ -3,13 +3,13 @@ kind: Service
 metadata:
   name: proxy
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: kali
   ports:
     - name: "1080"
       protocol: TCP
-      port: 1082
+      port: 1080
       targetPort: 1080
     - name: "8081"
       protocol: TCP
