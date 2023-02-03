@@ -46,5 +46,5 @@ spec:
     app: kali-dns
   ports:
     - name: "dns"
-      protocol: TCP
+      protocol: UDP
       port: 53
