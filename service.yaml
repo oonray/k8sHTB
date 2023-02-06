@@ -14,3 +14,7 @@ spec:
       protocol: TCP
       port: 8081
       targetPort: 8080
+    - name: "sliver"
+      protocol: TCP
+      port: 31337
+      targetPort: 31337

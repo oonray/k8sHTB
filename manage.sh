@@ -28,9 +28,9 @@ sliver(){
     echo "Running sliver"
     folder=".htb"
     container="c2"
-    sliver_path="/sliver/$folder/sliver"
+    sliver_path="/home/sliver/$folder/sliver"
     kali_path="/root/$folder/sliver"
-    ip=$(kubectl -n htb get service | grep proxy | awk '{print $3}')
+    ip="proxy.htb.svc.cluster.local"
     port=31337
 
     kubectl -n htb exec $POD -- rm "$kali_path/oonray.cfg"
