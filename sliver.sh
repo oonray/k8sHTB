@@ -1,6 +1,6 @@
 #!/bin/bash
 set -x
-k='/bin/kubectl -n pk'
+k='kubectl -n htb'
 pod=`$k get pod | grep kali | awk '{print $1}'`
 port=`$k get service | grep -oE '31337:[0-9]{5,}' | awk -F ':' '{print $1}'`
 ip=`$k get service | grep -oE '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'`

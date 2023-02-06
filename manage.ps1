@@ -1,3 +1,4 @@
+#!/snap/bin/pwsh
 
 param ([Switch]$kali,
        [Switch]$proxy,
@@ -10,7 +11,7 @@ function start_kali(){
 }
 
 function start_vpn(){
-  kubectl -n htb exec $Pod -c openvpn -- Socks5 -lp 1080
+  kubectl -n htb exec $Pod -c openvpn -- service danted start
 }
 
 function start_sliver(){
