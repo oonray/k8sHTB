@@ -44,6 +44,9 @@ spec:
         - name: htb-cl
           hostPath:
             path: /disk1/htb
+        - name: downloads
+          hostPath:
+            path: /home/oonray/Downloads
       containers:
         - name: kali
           image: oonray/kali:v1.1.6
@@ -72,6 +75,8 @@ spec:
               subPath: vpn.ovpn
             - mountPath: /root/.htb/
               name: htb-cl
+            - mountPath: /root/Downloads
+              name: downloads
           resources:
             limits:
               cpu: "2"
