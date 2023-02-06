@@ -71,8 +71,7 @@ spec:
           command:
             - "service"
             - "danted"
-            - "start"
-            - "&"
+            - "start;"
             - "openvpn"
             - "/root/.vpn/vpn.ovpn"
           ports:
