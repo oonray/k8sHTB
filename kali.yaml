@@ -97,7 +97,7 @@ spec:
             - "daemon"
           image: oonray/c2:v1.1.6
           volumeMounts:
-            - mountPath: /sliver/.htb/
+            - mountPath: /home/sliver/.htb/
               name: htb-cl
           ports:
             - containerPort: 31337
