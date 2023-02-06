@@ -69,9 +69,6 @@ spec:
           stdin: true
           imagePullPolicy: Always
           command:
-            - "service"
-            - "danted"
-            - "start;"
             - "openvpn"
             - "/root/.vpn/vpn.ovpn"
           ports:
