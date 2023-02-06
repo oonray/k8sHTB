@@ -56,6 +56,8 @@ spec:
           volumeMounts:
             - mountPath: /root/.htb/
               name: htb-cl
+            - mountPath: /root/Downloads
+              name: downloads
           ports:
             - containerPort: 8081
 
@@ -66,7 +68,13 @@ spec:
           tty: true
           stdin: true
           imagePullPolicy: Always
-          command: ["openvpn", "/root/.vpn/vpn.ovpn"]
+          command:
+            - "service"
+            - "danted"
+            - "start"
+            - "&"
+            - "openvpn"
+            - "/root/.vpn/vpn.ovpn"
           ports:
             - containerPort: 1080
           volumeMounts:
@@ -75,8 +83,6 @@ spec:
               subPath: vpn.ovpn
             - mountPath: /root/.htb/
               name: htb-cl
-            - mountPath: /root/Downloads
-              name: downloads
           resources:
             limits:
               cpu: "2"
