@@ -27,6 +27,7 @@ spec:
             - "dns"
             - "-H"
             - "0.0.0.0"
+            - "interface.htb:10.10.11.200"
             - "precious.htb:10.10.11.189"
             - "stocker.htb:10.10.11.196"
           ports:
@@ -44,10 +45,4 @@ kind: Service
 metadata:
   name: dns
 spec:
-  type: ClusterIP
-  selector:
-    app: kali-dns
-  ports:
-    - name: "dns"
-      protocol: UDP
-      port: 53
+  type: Cl
