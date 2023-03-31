@@ -49,7 +49,7 @@ spec:
             path: /home/oonray/Downloads
       containers:
         - name: kali
-          image: oonray/kali:v1.0.39
+          image: oonray/kali:v1.0.45
           tty: true
           stdin: true
           command: ["/bin/sh"]
@@ -62,7 +62,7 @@ spec:
             - containerPort: 8081
 
         - name: openvpn
-          image: oonray/vpn:v1.0.39
+          image: oonray/vpn:v1.0.45
           securityContext:
             privileged: true
           tty: true
@@ -95,7 +95,7 @@ spec:
           command:
             - "/opt/sliver-server"
             - "daemon"
-          image: oonray/c2:v1.0.39
+          image: oonray/c2:v1.0.45
           volumeMounts:
             - mountPath: /home/sliver/.htb/
               name: htb-cl
