@@ -9,6 +9,6 @@ replicas:
 resources:
   - ../../../../base
   - secrets.enc.json
+  - configmap.yaml
 patches:
   - deployment.yaml
-  - configmap.yaml
