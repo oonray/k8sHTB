@@ -8,3 +8,4 @@ replicas:
 resources:
   - ../../../base
   - secrets.enc.json
+  - ad

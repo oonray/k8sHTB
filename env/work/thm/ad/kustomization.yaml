@@ -9,5 +9,6 @@ replicas:
 resources:
   - ../../../../base
   - secrets.enc.json
+patchesStrategicMerge:
   - deployment.yaml
   - configmap.yaml
