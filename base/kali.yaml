@@ -5,7 +5,7 @@ metadata:
   labels:
     app: kali
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: kali
@@ -15,26 +15,12 @@ spec:
         app: kali
     spec:
       volumes:
-        - name: gitlabcert
-          hostPath:
-            type: DirectoryOrCreate
-            path: /disk1/gitlab/cert
-        - name: runner-path
-          hostPath:
-            path: /disk1/htb/runner
-            type: DirectoryOrCreate
         - name: tmux-conf
           configMap:
             name: tmux
             items:
               - key: .tmux.conf
                 path: .tmux.conf
-        - name: runner-conf
-          configMap:
-            name: runner-config
-            items:
-              - key: config.toml
-                path: config.toml
         - name: vpn-config
           secret:
             secretName: vpn-config
