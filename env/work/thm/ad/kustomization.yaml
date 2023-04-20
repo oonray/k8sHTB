@@ -2,10 +2,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: thm
+namePrefix: ad-
 replicas:
   - name: kali
     count: 1
 resources:
   - ../../../base
   - secrets.enc.json
-  - ad
+  - deployment.yaml
+  - configmap.yaml

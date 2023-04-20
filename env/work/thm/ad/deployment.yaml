@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kali
+  labels:
+    app: kali
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kali
+  template:
+    metadata:
+      labels:
+        app: kali
+    spec:
+      volumes:
+        - name: resolv
+          configMap:
+            name: resolv
+            items:
+              - key: resolv.conf
+                path: resolv.conf
+      containers:
+        - name: kali
+          volumeMounts:
+            - mountPath: /etc/resolv.conf
+              name: resolv
+              subPath: resolv.conf
+        - name: c2
+          volumeMounts:
+            - mountPath: /etc/resolv.conf
+              name: resolv
+              subPath: resolv.conf
+        - name: openvpn
+          volumeMounts:
+            - mountPath: /etc/resolv.conf
+              name: resolv
+              subPath: resolv.conf
