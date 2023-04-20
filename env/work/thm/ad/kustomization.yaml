@@ -7,7 +7,7 @@ replicas:
   - name: kali
     count: 1
 resources:
-  - ../../../base
-  - secrets.enc.json
-  - deployment.yaml
-  - configmap.yaml
+  - base
+  - env/work/thm/ad/secrets.enc.json
+  - env/work/thm/ad/deployment.yaml
+  - env/work/thm/ad/configmap.yaml
