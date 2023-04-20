@@ -6,6 +6,6 @@ replicas:
   - name: kali
     count: 1
 resources:
-  - base
-  - env/work/thm/secrets.enc.json
-  - env/work/thm/ad
+  - ../../../base
+  - secrets.enc.json
+  - ad
