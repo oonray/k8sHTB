@@ -12,6 +12,12 @@ spec:
             items:
               - key: resolv.conf
                 path: resolv.conf
+        - name: vpn-config
+          secret:
+            secretName: ad-vpn-config
+            items:
+              - key: vpn.ovpn
+                path: vpn.ovpn
       containers:
         - name: kali
           volumeMounts:
