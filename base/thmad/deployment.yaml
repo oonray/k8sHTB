@@ -18,6 +18,12 @@ spec:
             items:
               - key: vpn.ovpn
                 path: vpn.ovpn
+        - name: resolv
+          configMap:
+            name: dante
+            items:
+              - key: danted.conf
+                path: danted.conf
       containers:
         - name: kali
           volumeMounts:
@@ -34,3 +40,6 @@ spec:
             - mountPath: /etc/resolv.conf
               name: resolv
               subPath: resolv.conf
+            - mountPath: /etc/danted.conf
+              name: danted
+              subPath: danted.conf
