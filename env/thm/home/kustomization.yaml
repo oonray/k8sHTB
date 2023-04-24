@@ -6,6 +6,6 @@ replicas:
   - name: kali
     count: 1
 resources:
-  - ../ad
+  - ad
   - ../../../base/default
   - secrets.enc.json

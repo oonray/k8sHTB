@@ -7,5 +7,5 @@ replicas:
   - name: kali
     count: 1
 resources:
-  - ../../../../base/thm/ad
+  - ../../ad
   - secrets.enc.json
