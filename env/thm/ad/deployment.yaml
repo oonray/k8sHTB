@@ -12,18 +12,18 @@ spec:
             items:
               - key: resolv.conf
                 path: resolv.conf
+        - name: danted
+          configMap:
+            name: dante
+            items:
+              - key: danted.conf
+                path: danted.conf
         - name: vpn-config
           secret:
             secretName: ad-vpn-config
             items:
               - key: vpn.ovpn
                 path: vpn.ovpn
-        - name: resolv
-          configMap:
-            name: dante
-            items:
-              - key: danted.conf
-                path: danted.conf
       containers:
         - name: kali
           volumeMounts:
