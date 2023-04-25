@@ -11,6 +11,6 @@ images:
     newTag: v1.0.45
 resources:
   - configmaps.yaml
-  - dns.yaml
+    # - dns.yaml
   - service.yaml
   - kali.yaml
