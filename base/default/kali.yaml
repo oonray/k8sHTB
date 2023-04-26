@@ -30,9 +30,6 @@ spec:
         - name: htb-cl
           hostPath:
             path: /disk1/htb
-        - name: downloads
-          hostPath:
-            path: /home/oonray/Downloads
       containers:
         - name: kali
           image: oonray/kali:v1.0.45
@@ -42,10 +39,22 @@ spec:
           volumeMounts:
             - mountPath: /root/.htb/
               name: htb-cl
-            - mountPath: /root/Downloads
-              name: downloads
           ports:
-            - containerPort: 8081
+            - containerPort: 8000
+            - containerPort: 445
+
+        - name: proxy
+          image: oonray/vpn:v1.0.45
+          securityContext:
+            privileged: true
+          tty: true
+          stdin: true
+          command:
+            - "mitmweb"
+          ports:
+            - containerPort: 8080
+            - mountPath: /root/.htb/
+              name: htb-cl
 
         - name: openvpn
           image: oonray/vpn:v1.0.45
@@ -59,19 +68,20 @@ spec:
             - "/root/.vpn/vpn.ovpn"
           ports:
             - containerPort: 1080
+
           volumeMounts:
             - mountPath: /root/.vpn/vpn.ovpn
               name: vpn-config
               subPath: vpn.ovpn
             - mountPath: /root/.htb/
               name: htb-cl
-          resources:
-            limits:
-              cpu: "2"
-              memory: "1Gi"
-            requests:
-              cpu: "1"
-              memory: "500Mi"
+        #   resources:
+        #           limits:
+        #            cpu: "2"
+        #           memory: "1Gi"
+        #        requests:
+        #         cpu: "1"
+        #        memory: "500Mi"
 
         - name: c2
           securityContext:

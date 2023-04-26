@@ -7,12 +7,18 @@ spec:
   selector:
     app: kali
   ports:
-    - name: "prox"
+    - name: "socks5 danted"
       protocol: TCP
       port: 1080
-    - name: "8081"
+    - name: "mitmproxy http"
       protocol: TCP
-      port: 8081
+      port: 8080
+    - name: "python web"
+      protocol: TCP
+      port: 8000
+    - name: "smb"
+      protocol: TCP
+      port: 8000
       targetPort: 8080
     - name: "sliver"
       protocol: TCP
