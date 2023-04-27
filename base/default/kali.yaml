@@ -47,8 +47,6 @@ spec:
           image: oonray/vpn:v1.0.45
           securityContext:
             privileged: true
-          tty: true
-          stdin: true
           command:
             - "mitmweb"
           ports:
@@ -60,12 +58,11 @@ spec:
           image: oonray/vpn:v1.0.45
           securityContext:
             privileged: true
-          tty: true
-          stdin: true
           imagePullPolicy: Always
           command:
             - "openvpn"
             - "/root/.vpn/vpn.ovpn"
+
           ports:
             - containerPort: 1080
 
@@ -75,19 +72,10 @@ spec:
               subPath: vpn.ovpn
             - mountPath: /root/.htb/
               name: htb-cl
-        #   resources:
-        #           limits:
-        #            cpu: "2"
-        #           memory: "1Gi"
-        #        requests:
-        #         cpu: "1"
-        #        memory: "500Mi"
 
         - name: c2
           securityContext:
             privileged: true
-          tty: true
-          stdin: true
           command:
             - "/opt/sliver-server"
             - "daemon"
