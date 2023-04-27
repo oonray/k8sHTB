@@ -51,6 +51,7 @@ spec:
             - "mitmweb"
           ports:
             - containerPort: 8080
+          volumeMounts:
             - mountPath: /root/.htb/
               name: htb-cl
 
