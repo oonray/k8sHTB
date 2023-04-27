@@ -18,7 +18,7 @@ spec:
       port: 8000
     - name: "smb"
       protocol: TCP
-      port: 8000
+      port: 445
       targetPort: 8080
     - name: "sliver"
       protocol: TCP
