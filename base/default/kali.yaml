@@ -43,18 +43,6 @@ spec:
             - containerPort: 8000
             - containerPort: 445
 
-        - name: proxy
-          image: oonray/vpn:v1.0.45
-          securityContext:
-            privileged: true
-          command:
-            - "mitmweb"
-          ports:
-            - containerPort: 8080
-          volumeMounts:
-            - mountPath: /root/.htb/
-              name: htb-cl
-
         - name: openvpn
           image: oonray/vpn:v1.0.45
           securityContext:
