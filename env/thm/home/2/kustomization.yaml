@@ -7,5 +7,5 @@ replicas:
     count: 1
 resources:
   - ad
-  - ../../../base/default
+  - ../../../../base/default
   - secrets.enc.json
