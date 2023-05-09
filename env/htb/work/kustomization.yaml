@@ -5,6 +5,8 @@ namespace: htb
 replicas:
   - name: kali
     count: 1
+  - name: redeye
+    count: 1
 resources:
   - ../../../base/default
   - secrets.enc.json

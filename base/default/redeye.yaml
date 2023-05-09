@@ -1,0 +1,46 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redeye
+  labels:
+    app: redeye
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: redeye
+  template:
+    metadata:
+      labels:
+        app: redeye
+    spec:
+      volumes:
+        - name: redeye-files
+          hostPath:
+            path: /disk1/redeye/files
+        - name: redeye-db
+          hostPath:
+            path: /disk1/redeye/db
+        - name: redeye-data
+          hostPath:
+            path: /disk1/redeye/data
+      containers:
+        - name: redeye
+          image: ghcr.io/redeye-framework/redeye:latest
+          volumeMounts:
+            - mountPath: /redeye/files
+              name: redeye-files
+            - mountPath: /redeye/RedDB
+              name: redeye-db
+          ports:
+            - containerPort: 8443
+
+        - name: neo4j
+          image: neo4j:4.4.9
+          volumeMounts:
+            - mountPath: /data
+              name: redeye-data
+          ports:
+            - containerPort: 7474
+            - containerPort: 7687
