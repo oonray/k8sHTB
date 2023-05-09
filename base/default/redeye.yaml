@@ -20,9 +20,10 @@ spec:
           hostPath:
             path: /disk1/redeye/files
             type: DirectoryOrCreate
-          hostPath:
-            path: /disk1/redeye/db
-            type: DirectoryOrCreate
+        #- name: redeye-db
+        #  hostPath:
+        #    path: /disk1/redeye/db
+        #    type: DirectoryOrCreate
         - name: redeye-data
           hostPath:
             path: /disk1/redeye/data
