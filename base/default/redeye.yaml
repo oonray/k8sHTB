@@ -20,7 +20,6 @@ spec:
           hostPath:
             path: /disk1/redeye/files
             type: DirectoryOrCreate
-        - name: redeye-db
           hostPath:
             path: /disk1/redeye/db
             type: DirectoryOrCreate
@@ -34,8 +33,8 @@ spec:
           volumeMounts:
             - mountPath: /redeye/files
               name: redeye-files
-            - mountPath: /redeye/RedDB
-              name: redeye-db
+            #- mountPath: /redeye/RedDB
+            #  name: redeye-db
           ports:
             - containerPort: 8443
 
