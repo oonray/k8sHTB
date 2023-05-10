@@ -14,3 +14,6 @@ spec:
     - name: "neo4j"
       protocol: TCP
       port: 7687
+    - name: "neo4j-ui"
+      protocol: TCP
+      port: 7474
