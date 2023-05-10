@@ -28,7 +28,7 @@ spec:
           image: ghcr.io/redeye-framework/redeye:latest
           env:
             - name: NEO4J_URI
-              value: bolt://red-prox.redeye.svc.cluster.local:7687
+              value: bolt://neo4j.neo4j.svc.cluster.local:7687
             - name: NEO4J_PASSWORD
               valueFrom:
                 secretKeyRef:
