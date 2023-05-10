@@ -8,4 +8,5 @@ replicas:
 resources:
   - ad
   - ../../../base/default
+  - ../namespace.yaml
   - secrets.enc.json

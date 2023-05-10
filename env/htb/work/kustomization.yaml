@@ -7,4 +7,5 @@ replicas:
     count: 1
 resources:
   - ../../../base/default
+  - ../namespace.yaml
   - secrets.enc.json
