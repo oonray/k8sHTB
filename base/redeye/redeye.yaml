@@ -23,9 +23,6 @@ spec:
           hostPath:
             path: /disk1/redeye/data
             type: DirectoryOrCreate
-        - name: neo4j-pass
-          secret:
-            secretName: neo4j-pass
       containers:
         - name: reddeye
           image: ghcr.io/redeye-framework/redeye:latest
@@ -35,8 +32,8 @@ spec:
             - name: NEO4J_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  - name: neo4j-pass
-                    key: passwd
+                  name: neo4j-pass
+                  key: passwd
           volumeMounts:
             - mountPath: /redeye/files
               name: redeye-files
