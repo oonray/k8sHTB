@@ -20,6 +20,10 @@ spec:
           hostPath:
             path: /disk1/redeye/files
             type: DirectoryOrCreate
+        #- name: redeye-db
+        #  hostPath:
+        #    path: /disk1/redeye/db
+        #    type: DirectoryOrCreate
         - name: redeye-data
           hostPath:
             path: /disk1/redeye/data
@@ -29,10 +33,12 @@ spec:
           image: ghcr.io/redeye-framework/redeye:latest
           env:
             - name: NEO4J_URI
-              value: bolt://localhost:7687
+              value: bolt://redeye.redeye.svc.cluster.local:7687
           volumeMounts:
             - mountPath: /redeye/files
               name: redeye-files
+            #- mountPath: /redeye/RedDB
+            #  name: redeye-db
           ports:
             - containerPort: 8443
 
