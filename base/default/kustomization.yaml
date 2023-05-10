@@ -14,4 +14,3 @@ resources:
     # - dns.yaml
   - service.yaml
   - kali.yaml
-  - redeye.yaml
