@@ -34,12 +34,3 @@ spec:
               name: redeye-files
           ports:
             - containerPort: 8443
-
-        - name: neo4j
-          image: neo4j:4.4.9
-          volumeMounts:
-            - mountPath: /data
-              name: redeye-data
-          ports:
-            - containerPort: 7474
-            - containerPort: 7687
