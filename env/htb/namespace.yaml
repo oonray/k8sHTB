@@ -2,6 +2,6 @@
 kind: Namespace
 apiVersion: v1
 metadata:
-  name:
+  name: htb
   labels:
     name: htb
