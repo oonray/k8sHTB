@@ -29,6 +29,11 @@ spec:
           env:
             - name: NEO4J_URI
               value: bolt://red-prox.redeye.svc.cluster.local:7687
+            - name: NEO4J_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  - name: neo4j-pass
+                    key: passwd
           volumeMounts:
             - mountPath: /redeye/files
               name: redeye-files
