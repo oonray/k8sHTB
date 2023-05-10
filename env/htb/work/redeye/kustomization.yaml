@@ -5,5 +5,9 @@ replicas:
   - name: redeye
     count: 1
 resources:
-  - ../../../base/redeye
+  - ../../../../base/redeye
   - secrets.enc.json
+patches:
+  - path: deployment.yaml
+    target:
+      kind: Deployment

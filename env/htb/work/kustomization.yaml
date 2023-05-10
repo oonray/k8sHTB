@@ -7,5 +7,6 @@ replicas:
     count: 1
 resources:
   - ../../../base/default
+  - redeye
   - namespace.yaml
   - secrets.enc.json

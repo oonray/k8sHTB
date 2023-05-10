@@ -10,9 +10,3 @@ spec:
     - name: "http"
       protocol: TCP
       port: 8443
-    - name: "neo4j"
-      protocol: TCP
-      port: 7687
-    - name: "neo4j-ui"
-      protocol: TCP
-      port: 7474
