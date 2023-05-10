@@ -7,6 +7,6 @@ replicas:
     count: 1
 resources:
   - ad
-  - ../namespace.yaml
+  - namespace.yaml
   - ../../../base/default
   - secrets.enc.json

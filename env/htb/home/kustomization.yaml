@@ -5,9 +5,7 @@ namespace: htb
 replicas:
   - name: kali
     count: 1
-  - name: kali-dns
-    count: 1
 resources:
   - ../../../base/default
-  - ../namespace.yaml
+  - namespace.yaml
   - secrets.enc.json
