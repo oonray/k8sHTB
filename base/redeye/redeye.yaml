@@ -19,10 +19,6 @@ spec:
           hostPath:
             path: /disk1/redeye/files
             type: DirectoryOrCreate
-        - name: redeye-data
-          hostPath:
-            path: /disk1/redeye/data
-            type: DirectoryOrCreate
       containers:
         - name: reddeye
           image: ghcr.io/redeye-framework/redeye:latest

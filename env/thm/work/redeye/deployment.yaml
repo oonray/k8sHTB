@@ -5,6 +5,10 @@ metadata:
 spec:
   template:
     spec:
+      volumes:
+        - name: redeye-files
+          hostPath:
+            path: /disk1/redeye/files-thm
       containers:
         - name: reddeye
           env:
