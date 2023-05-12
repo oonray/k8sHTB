@@ -22,14 +22,21 @@ spec:
       containers:
         - name: reddeye
           image: ghcr.io/redeye-framework/redeye:latest
+          args:
+            - '--redTeam'
           env:
+            - name: AUTHENTICATION_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pass
+                  key: red
             - name: NEO4J_URI
               value: bolt://neo4j.dbs.svc.cluster.local:7687
             - name: NEO4J_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: neo4j-pass
-                  key: passwd
+                  name: pass
+                  key: neo4j
           volumeMounts:
             - mountPath: /redeye/files
               name: redeye-files
