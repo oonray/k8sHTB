@@ -22,9 +22,6 @@ spec:
       containers:
         - name: reddeye
           image: ghcr.io/redeye-framework/redeye:latest
-          command:
-            - './RedEye'
-            - '--redTeam'
           env:
             - name: AUTHENTICATION_PASSWORD
               valueFrom:
