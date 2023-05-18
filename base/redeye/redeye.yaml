@@ -23,7 +23,8 @@ spec:
         - name: reddeye
           image: ghcr.io/redeye-framework/redeye:latest
           command:
-            - redeye.py
+            - python3
+            - "./redeye.py"
             - "--safe"
             - "--port"
             - "8443"
