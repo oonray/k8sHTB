@@ -45,7 +45,5 @@ spec:
           volumeMounts:
             - mountPath: /redeye/files
               name: redeye-files
-            - mountPath: /redeye/RedDB
-              name: redeye-db
           ports:
             - containerPort: 8443
