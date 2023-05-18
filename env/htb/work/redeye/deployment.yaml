@@ -9,6 +9,9 @@ spec:
         - name: redeye-files
           hostPath:
             path: /disk1/redeye/files-htb
+        - name: redeye-db
+          hostPath:
+            path: /disk1/redeye/db-htb
       containers:
         - name: reddeye
           env:
