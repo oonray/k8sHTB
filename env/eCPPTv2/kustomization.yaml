@@ -8,6 +8,7 @@ replicas:
 resources:
   - ../../base/default
   - namespace.yaml
+  - configmap.yaml
   - secrets.enc.json
 patches:
   - path: deployment.yaml

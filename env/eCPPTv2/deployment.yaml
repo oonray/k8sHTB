@@ -5,6 +5,10 @@ metadata:
 spec:
   template:
     spec:
+      hostAliases:
+        - ip: 10.90.60.80
+          hostnames:
+            - foophonesels.com
       volumes:
         - name: pass-config
           secret:
@@ -12,9 +16,18 @@ spec:
             items:
               - key: pass.txt
                 path: pass.txt
+        - name: danted
+          configMap:
+            name: dante
+            items:
+              - key: danted.conf
+                path: danted.conf
       containers:
         - name: openvpn
           volumeMounts:
             - mountPath: /opt/pass.txt
               name: pass-config
               subPath: pass.txt
+            - mountPath: /etc/danted.conf
+              name: danted
+              subPath: danted.conf
