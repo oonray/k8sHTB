@@ -8,7 +8,7 @@ data:
     user.privileged: root
     user.unprivileged: nobody
     internal: 0.0.0.0 port=1080
-    external: tun0
+    external: target
     socksmethod: none
     clientmethod: none
     client pass {
