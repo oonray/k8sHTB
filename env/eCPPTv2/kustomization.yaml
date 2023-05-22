@@ -6,6 +6,6 @@ replicas:
   - name: kali
     count: 1
 resources:
-  - ../../../base/default
+  - ../../base/default
   - namespace.yaml
   - secrets.enc.json
