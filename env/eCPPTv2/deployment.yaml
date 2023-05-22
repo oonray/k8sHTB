@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kali
+spec:
+  template:
+    spec:
+      volumes:
+        - name: pass-config
+          secret:
+            secretName: vpn-config
+            items:
+              - key: pass.txt
+                path: pass.txt
+      containers:
+        - name: openvpn
+          volumeMounts:
+            - mountPath: /pass.txt
+              name: pass-config
+              subPath: pass.txt

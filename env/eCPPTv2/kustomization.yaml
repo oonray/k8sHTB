@@ -9,3 +9,7 @@ resources:
   - ../../base/default
   - namespace.yaml
   - secrets.enc.json
+patches:
+  - path: deployment.yaml
+    target:
+      kind: Deployment
