@@ -18,3 +18,8 @@ spec:
             - mountPath: /pass.txt
               name: pass-config
               subPath: pass.txt
+          command:
+            - "openvpn"
+            - "--config"
+            - "/root/.vpn/vpn.ovpn"
+            - "--auth-user-pass /pass.txt"
