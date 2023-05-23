@@ -96,8 +96,6 @@ spec:
           image: oonray/metasploit:v1.0.56
           securityContext:
             privileged: true
-          tty: true
-          stdin: true
           command:
             - "./msfd"
             - "-a"
