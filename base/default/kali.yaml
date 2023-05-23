@@ -32,7 +32,7 @@ spec:
             path: /disk1/htb
       containers:
         - name: kali
-          image: oonray/kali:v1.0.54
+          image: oonray/kali:v1.0.55
           tty: true
           stdin: true
           command: ["/bin/sh"]
@@ -44,7 +44,7 @@ spec:
             - containerPort: 445
 
         - name: openvpn
-          image: oonray/vpn:v1.0.54
+          image: oonray/vpn:v1.0.55
           securityContext:
             privileged: true
           imagePullPolicy: Always
@@ -62,17 +62,49 @@ spec:
             - mountPath: /root/.htb/
               name: htb-cl
 
-        - name: c2
+        - name: sliver
           securityContext:
             privileged: true
           command:
             - "/opt/sliver-server"
             - "daemon"
-          image: oonray/c2:v1.0.54
+          image: oonray/sliver:v1.0.55
           volumeMounts:
-            - mountPath: /home/sliver/.htb/
+            - mountPath: /root/.htb/
               name: htb-cl
           ports:
+            - containerPort: 31337
+            - containerPort: 8080
+            - containerPort: 443
+
+        - name: empire
+          command:
+            - "./ps-empire"
+            - "server"
+          securityContext:
+            privileged: true
+          image: oonray/empire:v1.0.55
+          volumeMounts:
+            - mountPath: /root/.htb/
+              name: htb-cl
+          ports:
+            - containerPort: 31337
+            - containerPort: 8080
+            - containerPort: 443
+
+        - name: metasploit
+          securityContext:
+            privileged: true
+          command:
+            - "msfd"
+            - "-a"
+            - "0.0.0.0"
+          image: oonray/metasploit:v1.0.55
+          volumeMounts:
+            - mountPath: /root/.htb/
+              name: htb-cl
+          ports:
+            - containerPort: 5554
             - containerPort: 31337
             - containerPort: 8080
             - containerPort: 443
