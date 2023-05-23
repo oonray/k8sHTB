@@ -32,7 +32,7 @@ spec:
             path: /disk1/htb
       containers:
         - name: kali
-          image: oonray/kali:v1.0.55
+          image: oonray/kali:v1.0.56
           tty: true
           stdin: true
           command: ["/bin/sh"]
@@ -44,7 +44,7 @@ spec:
             - containerPort: 445
 
         - name: openvpn
-          image: oonray/vpn:v1.0.55
+          image: oonray/vpn:v1.0.56
           securityContext:
             privileged: true
           imagePullPolicy: Always
@@ -68,7 +68,7 @@ spec:
           command:
             - "/opt/sliver-server"
             - "daemon"
-          image: oonray/sliver:v1.0.55
+          image: oonray/sliver:v1.0.56
           volumeMounts:
             - mountPath: /root/.htb/
               name: htb-cl
@@ -83,7 +83,7 @@ spec:
             - "server"
           securityContext:
             privileged: true
-          image: oonray/empire:v1.0.55
+          image: oonray/empire:v1.0.56
           volumeMounts:
             - mountPath: /root/.htb/
               name: htb-cl
@@ -99,7 +99,7 @@ spec:
             - "msfd"
             - "-a"
             - "0.0.0.0"
-          image: oonray/metasploit:v1.0.55
+          image: oonray/metasploit:v1.0.56
           volumeMounts:
             - mountPath: /root/.htb/
               name: htb-cl
