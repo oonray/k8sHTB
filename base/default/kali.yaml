@@ -65,6 +65,7 @@ spec:
         - name: sliver
           securityContext:
             privileged: true
+            runAsUser: 0
           command:
             - "/opt/sliver-server"
             - "daemon"
