@@ -93,6 +93,7 @@ spec:
             - containerPort: 443
 
         - name: metasploit
+          image: oonray/metasploit:v1.0.56
           securityContext:
             privileged: true
           tty: true
@@ -101,7 +102,9 @@ spec:
             - "./msfd"
             - "-a"
             - "0.0.0.0"
-          image: oonray/metasploit:v1.0.56
+            - "-p"
+            - "5554"
+            - "-f"
           volumeMounts:
             - mountPath: /root/.htb/
               name: htb-cl
