@@ -96,7 +96,7 @@ spec:
           securityContext:
             privileged: true
           command:
-            - "msfd"
+            - "./msfd"
             - "-a"
             - "0.0.0.0"
           image: oonray/metasploit:v1.0.56
