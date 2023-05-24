@@ -24,3 +24,7 @@ spec:
       protocol: TCP
       port: 31337
       targetPort: 31337
+    - name: "empire"
+      protocol: TCP
+      port: 1337
+      targetPort: 1337
