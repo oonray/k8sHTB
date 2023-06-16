@@ -21,16 +21,16 @@ POD=$(kubectl -n $space_n get pods | grep Running | grep -v dns | awk '{print $1
 echo "Found pod $POD"
 
 kali(){
-kubectl -n $space_n exec -it $POD -- zsh
+kubectl -n $space_n exec -it $POD -c kali -- zsh
 }
 
 vpn(){
-kubectl -n $space_n exec $POD -c opanvpn -- service danted start
+kubectl -n $space_n exec $POD -c openvpn -- service danted start
 }
 
 sliver(){
     echo "Running sliver"
-    folder=".$space_n"
+    folder=".htb"
     container="c2"
     sliver_path="/home/sliver/$folder/sliver"
     kali_path="/root/$folder/sliver"
