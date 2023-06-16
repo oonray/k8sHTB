@@ -6,18 +6,25 @@ sliver_o=0
 start_o=0
 space_n="htb"
 
-while getopts 'kvstn' flag; do
+while getopts 'hkvstn' flag; do
   case "${flag}" in
     k) kali_o=1 ;;
     v) vpn_o=1 ;;
     s) sliver_o=1 ;;
     t) start_o=1;;
-    n) space_n=$OPTARG
+    n) space_n=$OPTARG;;
+    h)
+        echo "Args:"
+        echo "	-k		kali"
+        echo "	-v		vpn"
+        echo "	-s		sliver"
+        echo "	-t		vpn+kali"
+        echo "	-n <namespace>	set namespace (default: htb)"
+    ;;
   esac
 done
 
 POD=$(kubectl -n $space_n get pods | grep Running | grep -v dns | awk '{print $1}')
-
 echo "Found pod $POD"
 
 kali(){
