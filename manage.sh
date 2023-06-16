@@ -44,6 +44,14 @@ sliver(){
     kubectl -n $space_n exec $POD -it -- sliver-client
 }
 
+empire(){
+    echo "Running EMpire"
+}
+
+msf(){
+    echo "Running MSF"
+}
+
 start(){
  vpn
  kali
