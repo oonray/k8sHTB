@@ -3,41 +3,50 @@
 kali_o=0
 vpn_o=0
 sliver_o=0
+start_o=0
+space_n="htb"
 
-while getopts 'kvs' flag; do
+while getopts 'kvstn' flag; do
   case "${flag}" in
     k) kali_o=1 ;;
     v) vpn_o=1 ;;
     s) sliver_o=1 ;;
+    t) start_o=1;;
+    n) space_n=$OPTARG
   esac
 done
 
-POD=$(kubectl -n htb get pods | grep Running | grep -v dns | awk '{print $1}')
+POD=$(kubectl -n $space_n get pods | grep Running | grep -v dns | awk '{print $1}')
 
 echo "Found pod $POD"
 
 kali(){
-kubectl -n htb exec -it $POD -- zsh
+kubectl -n $space_n exec -it $POD -- zsh
 }
 
 vpn(){
-kubectl -n htb exec $POD -c opanvpn -- service danted start
+kubectl -n $space_n exec $POD -c opanvpn -- service danted start
 }
 
 sliver(){
     echo "Running sliver"
-    folder=".htb"
+    folder=".$space_n"
     container="c2"
     sliver_path="/home/sliver/$folder/sliver"
     kali_path="/root/$folder/sliver"
-    ip="proxy.htb.svc.cluster.local"
+    ip="proxy.$space_n.svc.cluster.local"
     port=31337
 
-    kubectl -n htb exec $POD -- rm "$kali_path/oonray.cfg"
-    kubectl -n htb exec $POD -- rm "/root/.sliver-client/configs/oonray_$ip.cfg"
-    kubectl -n htb exec $POD -c $container -- /opt/sliver-server operator -n oonray -l $ip -p $port -s "$sliver_path/oonray.cfg"
-    kubectl -n htb exec $POD -- sliver-client import "$kali_path/oonray.cfg"
-    kubectl -n htb exec $POD -it -- sliver-client
+    kubectl -n $space_n exec $POD -- rm "$kali_path/oonray.cfg"
+    kubectl -n $space_n exec $POD -- rm "/root/.sliver-client/configs/oonray_$ip.cfg"
+    kubectl -n $space_n exec $POD -c $container -- /opt/sliver-server operator -n oonray -l $ip -p $port -s "$sliver_path/oonray.cfg"
+    kubectl -n $space_n exec $POD -- sliver-client import "$kali_path/oonray.cfg"
+    kubectl -n $space_n exec $POD -it -- sliver-client
+}
+
+start(){
+ vpn
+ kali
 }
 
 if [ "$kali_o" -eq 1 ]
@@ -53,4 +62,9 @@ fi
 if [ "$sliver_o" -eq 1 ]
 then
     sliver
+fi
+
+if [ "$start_o" -eq 1 ]
+then
+    start
 fi
