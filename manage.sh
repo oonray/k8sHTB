@@ -6,26 +6,34 @@ sliver_o=0
 start_o=0
 space_n="htb"
 
-while getopts 'hkvstn' flag; do
+POD=$(kubectl -n $space_n get pods | grep Running | grep -v dns | awk '{print $1}')
+
+while getopts 'hkvstne' flag; do
   case "${flag}" in
     k) kali_o=1 ;;
     v) vpn_o=1 ;;
     s) sliver_o=1 ;;
     t) start_o=1;;
     n) space_n=$OPTARG;;
+    e)
+        echo "kubectl -n $space_n exec -it $POD"
+    ;;
     h)
+        help
+    ;;
+  esac
+done
+
+help(){
         echo "Args:"
         echo "	-k		kali"
         echo "	-v		vpn"
         echo "	-s		sliver"
         echo "	-t		vpn+kali"
+        echo "	-e		get exec command"
+        echo "	-c <command>    run command"
         echo "	-n <namespace>	set namespace (default: htb)"
-    ;;
-  esac
-done
-
-POD=$(kubectl -n $space_n get pods | grep Running | grep -v dns | awk '{print $1}')
-echo "Found pod $POD"
+}
 
 kali(){
 kubectl -n $space_n exec -it $POD -c kali -- zsh
@@ -67,19 +75,25 @@ start(){
 if [ "$kali_o" -eq 1 ]
 then
     kali
+    exit
 fi
 
 if [ "$vpn_o" -eq 1 ]
 then
     vpn
+    exit
 fi
 
 if [ "$sliver_o" -eq 1 ]
 then
     sliver
+    exit
 fi
 
 if [ "$start_o" -eq 1 ]
 then
     start
+    exit
 fi
+
+help
