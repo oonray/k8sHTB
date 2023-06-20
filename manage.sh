@@ -17,6 +17,7 @@ while getopts 'hkvstne' flag; do
     n) space_n=$OPTARG;;
     e)
         echo "kubectl -n $space_n exec -it $POD"
+        exit
     ;;
     h)
         help
@@ -31,7 +32,6 @@ help(){
         echo "	-s		sliver"
         echo "	-t		vpn+kali"
         echo "	-e		get exec command"
-        echo "	-c <command>    run command"
         echo "	-n <namespace>	set namespace (default: htb)"
 }
 
