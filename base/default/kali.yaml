@@ -69,7 +69,7 @@ spec:
           command:
             - "/opt/sliver-server"
             - "daemon"
-          image: oonray/sliver:v1.0.86
+          image: oonray/c2:v1.0.86
           volumeMounts:
             - mountPath: /root/.htb/
               name: htb-cl
