@@ -43,7 +43,7 @@ spec:
             - containerPort: 8000
             - containerPort: 445
 
-        - name: openvpn
+        - name: vpn
           image: oonray/vpn:v1.0.86
           securityContext:
             privileged: true
@@ -51,7 +51,6 @@ spec:
           command:
             - "openvpn"
             - "/root/.vpn/vpn.ovpn"
-
           ports:
             - containerPort: 1080
 
@@ -62,7 +61,7 @@ spec:
             - mountPath: /root/.htb/
               name: htb-cl
 
-        - name: sliver
+        - name: c2
           securityContext:
             privileged: true
             runAsUser: 0

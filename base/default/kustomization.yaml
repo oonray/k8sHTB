@@ -4,13 +4,12 @@ kind: Kustomization
 namespace: htb
 images:
   - name: kali
-    newTag: v1.0.45
-  - name: openvpn
-    newTag: v1.0.45
+    newTag: v1.0.86
+  - name: vpn
+    newTag: v1.0.86
   - name: c2
-    newTag: v1.0.45
+    newTag: v1.0.86
 resources:
   - configmaps.yaml
-    # - dns.yaml
   - service.yaml
   - kali.yaml
