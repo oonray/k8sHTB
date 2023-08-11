@@ -28,3 +28,7 @@ spec:
       protocol: TCP
       port: 1337
       targetPort: 1337
+    - name: "starkille"
+      protocol: TCP
+      port: 5000
+      targetPort: 5000

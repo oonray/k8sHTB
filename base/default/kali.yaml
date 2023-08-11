@@ -73,6 +73,7 @@ spec:
             - mountPath: /root/.htb/
               name: htb-cl
           ports:
+            - containerPort: 5000
             - containerPort: 31337
             - containerPort: 8080
             - containerPort: 443
