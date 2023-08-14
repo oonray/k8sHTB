@@ -15,12 +15,6 @@ spec:
         app: kali
     spec:
       volumes:
-        - name: tmux-conf
-          configMap:
-            name: tmux
-            items:
-              - key: .tmux.conf
-                path: .tmux.conf
         - name: vpn-config
           secret:
             secretName: vpn-config
@@ -60,20 +54,3 @@ spec:
               subPath: vpn.ovpn
             - mountPath: /root/.htb/
               name: htb-cl
-
-        - name: c2
-          securityContext:
-            privileged: true
-            runAsUser: 0
-          command:
-            - "/opt/sliver-server"
-            - "daemon"
-          image: oonray/c2:v1.0.86
-          volumeMounts:
-            - mountPath: /root/.htb/
-              name: htb-cl
-          ports:
-            - containerPort: 5000
-            - containerPort: 31337
-            - containerPort: 8080
-            - containerPort: 443

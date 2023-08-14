@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: c2
+  labels:
+    app: c2
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: c2
+  template:
+    metadata:
+      labels:
+        app: c2
+    spec:
+      volumes:
+        - name: vpn-config
+          secret:
+            secretName: vpn-config
+            items:
+              - key: vpn.ovpn
+                path: vpn.ovpn
+        - name: htb-cl
+          hostPath:
+            path: /disk1/htb
+      containers:
+        - name: c2
+          securityContext:
+            privileged: true
+            runAsUser: 0
+          command:
+            - "/opt/sliver-server"
+            - "daemon"
+          image: oonray/c2:v1.0.91
+          volumeMounts:
+            - mountPath: /root/.htb/
+              name: htb-cl
+          ports:
+            - containerPort: 5000
+            - containerPort: 31337
+            - containerPort: 8080
+            - containerPort: 443
