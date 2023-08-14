@@ -4,7 +4,9 @@ kind: Kustomization
 namespace: thm
 replicas:
   - name: kali
-    count: 1
+    count: 0
+  - name: c2
+    count: 0
 resources:
   - ad
   - namespace.yaml

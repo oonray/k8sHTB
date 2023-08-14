@@ -5,6 +5,8 @@ namespace: htb
 replicas:
   - name: kali
     count: 1
+  - name: c2
+    count: 1
 resources:
   - ../../../base/default
   - namespace.yaml
