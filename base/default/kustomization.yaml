@@ -13,4 +13,5 @@ resources:
   - c2.yaml
   - configmaps.yaml
   - service.yaml
+  - service2.yaml
   - kali.yaml
