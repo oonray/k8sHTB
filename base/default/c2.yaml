@@ -15,23 +15,14 @@ spec:
         app: c2
     spec:
       volumes:
-        - name: vpn-config
-          secret:
-            secretName: vpn-config
-            items:
-              - key: vpn.ovpn
-                path: vpn.ovpn
         - name: htb-cl
-          hostPath:
-            path: /disk1/htb
+          hostpath:
+            path: /media/share/htb
       containers:
         - name: c2
           securityContext:
             privileged: true
             runAsUser: 0
-          command:
-            - "/opt/sliver-server"
-            - "daemon"
           image: oonray/c2:v1.0.91
           volumeMounts:
             - mountPath: /root/.htb/

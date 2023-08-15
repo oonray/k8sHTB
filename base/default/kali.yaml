@@ -22,8 +22,8 @@ spec:
               - key: vpn.ovpn
                 path: vpn.ovpn
         - name: htb-cl
-          hostPath:
-            path: /disk1/htb
+          hostpath:
+            path: /media/share/htb
       containers:
         - name: kali
           image: oonray/kali:v1.0.86
