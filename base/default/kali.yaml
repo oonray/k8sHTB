@@ -22,7 +22,7 @@ spec:
               - key: vpn.ovpn
                 path: vpn.ovpn
         - name: htb-cl
-          hostpath:
+          hostPath:
             path: /media/share/htb
       containers:
         - name: kali

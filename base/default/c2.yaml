@@ -16,7 +16,7 @@ spec:
     spec:
       volumes:
         - name: htb-cl
-          hostpath:
+          hostPath:
             path: /media/share/htb
       containers:
         - name: c2
