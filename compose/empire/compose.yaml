@@ -1,0 +1,20 @@
+version: "3"
+services:
+  empire: 
+    #image: "oonray/c2:v1.0.91"
+    platform: linux/amd64
+    build: https://github.com/BC-SECURITY/Empire.git
+    ports: 
+      - "31337:1337"
+      - "35000:5000"
+    volumes:
+      - /Users/alexanderbjornsrud/Documents/Shared/htb:/opt/shared
+
+  sliver: 
+    #image: "oonray/c2:v1.0.91"
+    platform: linux/amd64
+    build: https://github.com/BishopFox/sliver.git
+    ports: 
+      - "31338:1337"
+    volumes:
+      - /Users/alexanderbjornsrud/Documents/Shared/htb:/opt/shared

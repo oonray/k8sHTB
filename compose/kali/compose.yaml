@@ -1,0 +1,7 @@
+version: "3"
+services:
+  kali:
+    platform: linux/amd64
+    image: oonray/kali:v1.0.91
+    volumes:
+      - /Users/alexanderbjornsrud/Documents/Shared/htb:/opt/shared
