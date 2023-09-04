@@ -3,5 +3,8 @@ services:
   kali:
     platform: linux/amd64
     image: oonray/kali:v1.0.91
+    stdin_open: true
+    tty: true
+    network_mode: "host"
     volumes:
       - /Users/alexanderbjornsrud/Documents/Shared/htb:/opt/shared
