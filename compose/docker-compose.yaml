@@ -1,0 +1,4 @@
+include:
+  - kali/compose.yaml
+  - empire/compose.yaml
+  - metasploit/compose.yaml

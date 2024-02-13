@@ -1,0 +1,11 @@
+services:
+  metasploit:
+    tty: true
+    stdin_open: true
+    restart: unless-stopped
+    volumes:
+      - ~/htb:/opt/shared
+    ports: 
+      - "8445:445"
+      - "38000:55553"
+    build: https://github.com/rapid7/metasploit-framework.git 

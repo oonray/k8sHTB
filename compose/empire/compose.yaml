@@ -17,4 +17,4 @@ services:
     ports: 
       - "31338:1337"
     volumes:
-      - /Users/alexanderbjornsrud/Documents/Shared/htb:/opt/shared
+      - ~/htb:/opt/shared
