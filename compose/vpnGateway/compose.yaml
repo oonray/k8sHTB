@@ -1,10 +1,10 @@
 version: "3"
 services:
-  kali:
+  vpn:
     platform: linux/amd64
-    build: https://github.com/oonray/Containers.git#main:kali
+    build: https://github.com/oonray/Containers.git#main:vpn
     stdin_open: true
     tty: true
     network_mode: "host"
     volumes:
-      - ~/htb:/opt/shared
+      - ~/htb:/root
