@@ -1,8 +1,7 @@
 version: "3"
 services:
   vpn:
-    platform: linux/amd64
-    build: https://github.com/oonray/Containers.git#main:vpn
+    image: oonray/vpn:v1.1.43
     stdin_open: true
     tty: true
     network_mode: "host"

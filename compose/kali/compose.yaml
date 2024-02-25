@@ -1,8 +1,7 @@
 version: "3"
 services:
   kali:
-    platform: linux/amd64
-    build: https://github.com/oonray/Containers.git#main:kali
+    image: oonray/kali:v1.1.43
     stdin_open: true
     tty: true
     network_mode: "host"
