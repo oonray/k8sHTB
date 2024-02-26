@@ -5,6 +5,7 @@ services:
     build: https://github.com/oonray/Containers.git#main:kali
     stdin_open: true
     tty: true
+    cap_add: ["NET_ADMIN","NET_RAW"]
     ports:
       - "127.0.0.1:31337:31337"
       - "127.0.0.1:3980:8080"
