@@ -1,0 +1,14 @@
+version: "3"
+services:
+  kali:
+    platform: linux/amd64
+    build: https://github.com/BishopFox/sliver.git 
+    stdin_open: true
+    tty: true
+    cap_add: ["NET_ADMIN","NET_RAW"]
+    ports:
+      - "127.0.0.1:31337:31337"
+      - "127.0.0.1:3980:8080"
+    volumes:
+      - ~/htb:/opt/shared
+      - ~/.git:/opt/git
