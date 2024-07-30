@@ -21,9 +21,9 @@ spec:
             items:
               - key: vpn.ovpn
                 path: vpn.ovpn
-        - name: htb-cl
-          hostPath:
-            path: /media/share/htb
+        - name: htb-st
+          persistentVolumeClaim:
+            claimName: htb-cl
       containers:
         - name: kali
           image: oonray/kali:v1.0.86
@@ -31,8 +31,8 @@ spec:
           stdin: true
           command: ["/bin/sh"]
           volumeMounts:
-            - mountPath: /root/.htb/
-              name: htb-cl
+            - mountPath: /root/htb/
+              name: htb-st
           ports:
             - containerPort: 8000
             - containerPort: 445
@@ -41,6 +41,9 @@ spec:
           image: oonray/vpn:v1.0.86
           securityContext:
             privileged: true
+            sysctls:
+              - name: net.ipv4.ip_forward
+                value: 1
           imagePullPolicy: Always
           command:
             - "openvpn"
@@ -52,5 +55,5 @@ spec:
             - mountPath: /root/.vpn/vpn.ovpn
               name: vpn-config
               subPath: vpn.ovpn
-            - mountPath: /root/.htb/
-              name: htb-cl
+            - mountPath: /root/htb/
+              name: htb-st

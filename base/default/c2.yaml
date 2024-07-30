@@ -15,9 +15,9 @@ spec:
         app: c2
     spec:
       volumes:
-        - name: htb-cl
-          hostPath:
-            path: /media/share/htb
+        - name: htb-st
+          persistentVolumeClaim:
+            claimName: htb-cl
       containers:
         - name: c2
           securityContext:
@@ -25,8 +25,8 @@ spec:
             runAsUser: 0
           image: oonray/c2:v1.0.91
           volumeMounts:
-            - mountPath: /root/.htb/
-              name: htb-cl
+            - mountPath: /root/htb/
+              name: htb-st
           ports:
             - containerPort: 5000
             - containerPort: 31337
