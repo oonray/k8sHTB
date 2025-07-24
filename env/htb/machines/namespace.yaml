@@ -2,6 +2,6 @@
 kind: Namespace
 apiVersion: v1
 metadata:
-  name: ecppt
+  name: htb
   labels:
-    name: ecppt
+    name: htb

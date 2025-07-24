@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kali
+  labels:
+    app: kali
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: kali
+  template:
+    metadata:
+      labels:
+        app: kali
+    spec:
+#     securityContext:
+#       sysctls:
+#         - name: net.ipv4.ip_forward
+#           value: "1"
+      volumes:
+        - name: vpn-config
+          secret:
+            secretName: vpn-config
+            items:
+              - key: vpn.ovpn
+                path: vpn.ovpn
+        - name: htb-st
+          persistentVolumeClaim:
+            claimName: htb-cl
+      containers:
+        - name: kali
+          image: oonray/kali:latest
+          tty: true
+          stdin: true
+          command: ["sleep","infinity"]
+          imagePullPolicy: Always
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - mountPath: /root/htb/
+              name: htb-st
+          ports:
+            - containerPort: 8000
+            - containerPort: 445
+
+        - name: vpn
+          image: oonray/vpn:latest
+          securityContext:
+            privileged: true
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 1080
+
+          volumeMounts:
+            - mountPath: /root/.vpn/vpn.ovpn
+              name: vpn-config
+              subPath: vpn.ovpn

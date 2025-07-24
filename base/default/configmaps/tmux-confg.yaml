@@ -1,0 +1,8 @@
+kind: ConfigMap
+metadata:
+  name: tmux
+apiVersion: v1
+data:
+  .tmux.conf: |-
+    set -g default-terminal "screen-256color"
+    set -g mouse on
