@@ -14,10 +14,10 @@ spec:
       labels:
         app: kali
     spec:
-#     securityContext:
-#       sysctls:
-#         - name: net.ipv4.ip_forward
-#           value: "1"
+      securityContext:
+        sysctls:
+         - name: net.ipv4.ip_forward
+           value: "1"
       volumes:
         - name: vpn-config
           secret:
@@ -36,9 +36,10 @@ spec:
           command: ["sleep","infinity"]
           imagePullPolicy: Always
           securityContext:
+            runAsUser: 1000
             privileged: true
           volumeMounts:
-            - mountPath: /root/htb/
+            - mountPath: /kali/htb/
               name: htb-st
           ports:
             - containerPort: 8000
