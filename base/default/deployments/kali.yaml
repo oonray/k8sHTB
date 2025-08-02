@@ -54,6 +54,6 @@ spec:
             - containerPort: 1080
 
           volumeMounts:
-            - mountPath: /root/.vpn/vpn.ovpn
+            - mountPath: /opt/vpn/vpn.ovpn
               name: vpn-config
               subPath: vpn.ovpn
