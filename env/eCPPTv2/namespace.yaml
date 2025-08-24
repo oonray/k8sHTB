@@ -1,7 +1,0 @@
-
-kind: Namespace
-apiVersion: v1
-metadata:
-  name: ecppt
-  labels:
-    name: ecppt
