@@ -57,3 +57,6 @@ spec:
             - mountPath: /opt/vpn/vpn.ovpn
               name: vpn-config
               subPath: vpn.ovpn
+            - mountPath: /etc/danted/danted.conf
+              name: vpn-config
+              subPath: danted.conf
