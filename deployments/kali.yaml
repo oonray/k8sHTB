@@ -25,6 +25,8 @@ spec:
             items:
               - key: vpn.ovpn
                 path: vpn.ovpn
+              - key: danted.conf
+                path: danted.conf
         - name: htb-st
           persistentVolumeClaim:
             claimName: htb-cl
@@ -57,6 +59,6 @@ spec:
             - mountPath: /opt/vpn/vpn.ovpn
               name: vpn-config
               subPath: vpn.ovpn
-            - mountPath: /etc/danted/danted.conf
+            - mountPath: /etc/danted.conf
               name: vpn-config
               subPath: danted.conf
