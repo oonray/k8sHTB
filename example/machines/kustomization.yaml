@@ -1,0 +1,50 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: htb
+replicas:
+  - name: kali
+    count: 1
+patches:
+  - target:
+      kind: Deployment
+      name: kali
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: kali-machines
+      - op: add
+        path: /metadata/labels/connection
+        value: machines
+      - op: replace
+        path: /spec/template/spec/volumes/0/name
+        value: vpn-config-machines
+      - op: replace
+        path: /spec/template/spec/volumes/0/secret/secretName
+        value: vpn-config-machines
+      - op: replace
+        path: /spec/template/spec/containers/1/volumeMounts/0/name
+        value: vpn-config-machines
+      - op: replace
+        path: /spec/template/spec/containers/1/volumeMounts/1/name
+        value: vpn-config-machines
+  - target:
+      kind: Secret
+      name: vpn-config
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: vpn-config-machines
+  - target:
+      kind: Service
+      name: proxy
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: machines-proxy
+      - op: add
+        path: /spec/selector/connection
+        value: machines
+resources:
+  - secrets.tmpl.yaml
+  - https://github.com/oonray/k8sHTB.git
