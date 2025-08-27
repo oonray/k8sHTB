@@ -41,7 +41,7 @@ spec:
             runAsUser: 1000
             privileged: true
           volumeMounts:
-            - mountPath: /kali/htb/
+            - mountPath: /home/kali/storage
               name: htb-st
           ports:
             - containerPort: 8000
