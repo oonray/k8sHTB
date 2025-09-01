@@ -56,7 +56,7 @@ spec:
             - containerPort: 1080
 
           volumeMounts:
-            - mountPath: /opt/vpn/vpn.ovpn
+            - mountPath: /opt/conf/vpn/vpn.ovpn
               name: vpn-config
               subPath: vpn.ovpn
             - mountPath: /etc/danted.conf
