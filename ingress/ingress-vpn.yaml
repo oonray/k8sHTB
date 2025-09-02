@@ -28,9 +28,9 @@ spec:
         - name: kali-service
           port: 8080
     - kind: Rule
-      match: Host(`python.kali.$(ENV).$(DOMAIN)`)
+      match: Host(`python.kali`)
       services:
-        - name: kali-$(ENV)-service
+        - name: kali-ervice
           port: 8000
   tls:
     secretName: argocd-tls
