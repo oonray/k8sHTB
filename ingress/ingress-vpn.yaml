@@ -8,7 +8,7 @@ spec:
     - ssh
   routes:
     - kind: Rule
-      match: Host(`ssh.kali`)
+      match: Host(`kali`)
       services:
         - name: kali-service
           port: 22
@@ -23,12 +23,12 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`http.kali`)
+      match: Host(`proxy.kali`)
       services:
         - name: kali-service
           port: 8080
     - kind: Rule
-      match: Host(`python.kali`)
+      match: Host(`web.kali`)
       services:
         - name: kali-ervice
           port: 8000
@@ -45,7 +45,7 @@ spec:
     - proxy
   routes:
     - kind: Rule
-      match: Host(`proxy.kali`)
+      match: Host(`kali`)
       services:
         - name: kali-service
           port: 1080

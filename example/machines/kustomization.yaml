@@ -5,46 +5,52 @@ namespace: htb
 replicas:
   - name: kali
     count: 1
-patches:
-  - target:
-      kind: Deployment
-      name: kali
-    patch: |-
-      - op: replace
-        path: /metadata/name
-        value: kali-machines
-      - op: add
-        path: /metadata/labels/connection
-        value: machines
-      - op: replace
-        path: /spec/template/spec/volumes/0/name
-        value: vpn-config-machines
-      - op: replace
-        path: /spec/template/spec/volumes/0/secret/secretName
-        value: vpn-config-machines
-      - op: replace
-        path: /spec/template/spec/containers/1/volumeMounts/0/name
-        value: vpn-config-machines
-      - op: replace
-        path: /spec/template/spec/containers/1/volumeMounts/1/name
-        value: vpn-config-machines
-  - target:
-      kind: Secret
-      name: vpn-config
-    patch: |-
-      - op: replace
-        path: /metadata/name
-        value: vpn-config-machines
-  - target:
-      kind: Service
-      name: proxy
-    patch: |-
-      - op: replace
-        path: /metadata/name
-        value: machines-proxy
-      - op: add
-        path: /spec/selector/connection
-        value: machines
+
+namePrefix: machines-
+
+labels:
+  - pairs:
+      vpn: machines
+
 resources:
   - secrets.tmpl.yaml
   - https://github.com/oonray/k8sHTB.git
+
+replacements:
+  - source:
+      kind: Secret
+      name: machines-vpn-config
+      fieldPath: metadata.name
+    targets:
+      - select:
+          kind: Deployment
+          name: kali
+        fieldPaths:
+          - spec.template.spec.volumes.[name=vpn-config].secret.secretName
+  - source:
+      kind: Service
+      name: machines-kali-service
+      fieldPath: metadata.name
+    targets:
+      - select:
+          kind: IngressRoute
+        fieldPaths:
+          - spec.routes.[kind=Rule].services.[name=kali-service].name
+
+patches:
+  - target:
+      kind: IngressRoute
+    patch: |
+      - op: replace
+        path: /spec/routes/0/match
+        value: "Host(`machines.kali.example.com`)"
+  - target:
+      kind: IngressRoute
+      name: web-kali-ingress
+    patch: |
+      - op: replace
+        path: /spec/routes/0/match
+        value: "Host(`proxy.machines.kali.example.com`)"
+      - op: replace
+        path: /spec/routes/1/match
+        value: "Host(`web.machines.kali.example.com`)"
