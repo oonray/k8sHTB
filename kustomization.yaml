@@ -8,5 +8,6 @@ images:
   - name: vpn
     newTag: v1.0.86
 resources:
-  - services/vpn.yaml
   - deployments/kali.yaml
+  - services/service-vpn.yaml
+  - ingress/ingress-vpn.yaml
