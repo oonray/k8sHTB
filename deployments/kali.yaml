@@ -46,6 +46,7 @@ spec:
           ports:
             - containerPort: 8000
             - containerPort: 445
+            - containerPort: 22
 
         - name: vpn
           image: oonray/vpn:latest

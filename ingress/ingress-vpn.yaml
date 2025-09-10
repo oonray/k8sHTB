@@ -1,5 +1,5 @@
 apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
+kind: IngressRouteTCP
 metadata:
   name: ssh-kali-ingress
   namespace: htb
@@ -36,7 +36,7 @@ spec:
     secretName: argocd-tls
 ---
 apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
+kind: IngressRouteTCP
 metadata:
   name: proxy-kali-ingress
   namespace: htb
