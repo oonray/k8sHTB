@@ -15,6 +15,9 @@ spec:
         app: kali
     spec:
       securityContext:
+        runAsNonRoot: true
+        runAsUser: 999
+        privileged: true
         sysctls:
          - name: net.ipv4.ip_forward
            value: "1"
@@ -37,9 +40,6 @@ spec:
           stdin: true
           command: ["sleep","infinity"]
           imagePullPolicy: Always
-          securityContext:
-            runAsUser: 1000
-            privileged: true
           volumeMounts:
             - mountPath: /home/kali/storage
               name: htb-st
@@ -50,8 +50,6 @@ spec:
 
         - name: vpn
           image: oonray/vpn:latest
-          securityContext:
-            privileged: true
           imagePullPolicy: Always
           ports:
             - containerPort: 1080
