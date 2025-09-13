@@ -22,13 +22,22 @@ spec:
         - name: c2
           securityContext:
             privileged: true
-            runAsUser: 0
-          image: oonray/c2:v1.0.91
+          image: oonray/c2:latest
           volumeMounts:
-            - mountPath: /root/htb/
+            - mountPath: /home/sliver/storage/
               name: htb-st
           ports:
-            - containerPort: 5000
-            - containerPort: 31337
-            - containerPort: 8080
-            - containerPort: 443
+            - name: listener
+              containerPort: 5000
+            - name: sliver
+              containerPort: 31337
+            - name: empire
+              containerPort: 1337
+            - name: socks
+              containerPort: 1080
+            - name: socks1
+              containerPort: 1081
+            - name: http
+              containerPort: 8080
+            - name: https
+              containerPort: 443

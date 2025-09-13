@@ -3,11 +3,11 @@ kind: Service
 metadata:
   name: c2
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: c2
   ports:
-    - name: "sliver"
+    - name: sliver
       protocol: TCP
       port: 31337
       targetPort: 31337

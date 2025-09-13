@@ -55,7 +55,6 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 1080
-
           volumeMounts:
             - mountPath: /opt/conf/vpn/vpn.ovpn
               name: vpn-config
