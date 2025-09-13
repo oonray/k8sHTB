@@ -1,9 +1,11 @@
 apiVersion: v1
-kind: PersistentVolumeClaim
+kind: PersistentVolume
 metadata:
-  name: htb-cl
+  name: htb-pc
 spec:
-  storageClassName: ""
+  storageClassName: longhorn
   accessModes:
     - ReadWriteMany
-  volumeName: htb-volume
+  resources:
+    requests:
+      storage: 20Gi
